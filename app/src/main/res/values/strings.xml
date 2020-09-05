@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">SIPP-App</string>
+    <string name="app_name">SI-Perlengkapan Pesta</string>
+
+    <string-array name="spinner_status">
+        <item>Pilih-Status</item>
+        <item>Users</item>
+        <item>Mitra</item>
+    </string-array>
 </resources>
