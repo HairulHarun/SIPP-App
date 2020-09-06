@@ -13,6 +13,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
@@ -93,6 +95,26 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
 
         initRV();
         searchData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_1, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_keranjang) {
+            startActivity(new Intent(MainActivity.this, KeranjangActivity.class));
+        }else if (id == R.id.action_profile) {
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+        }else if (id == R.id.action_about) {
+            startActivity(new Intent(MainActivity.this, AboutActivity.class));
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
