@@ -13,6 +13,13 @@ public class URLAdapter {
     public String getLapakRandom(){
         return URL = URL+"ws-get-lapak-random.php";
     }
+    public String getLapakPhoto(){
+        return URL = URL+"ws-get-lapak-photo.php";
+    }
+    public String simpanKeranjang(){
+        return URL = URL+"ws-simpan-keranjang.php";
+    }
+
     public String getPhotoLapak(){
         return URL = URL_PHOTO+"lapak-photo/";
     }

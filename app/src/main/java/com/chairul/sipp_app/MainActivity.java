@@ -104,7 +104,16 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
     @Override
     public void onSliderClick(BaseSliderView slider) {
         Intent intent = new Intent(MainActivity.this, LapakActivity.class);
-        intent.putExtra("id", String.valueOf(slider.getBundle().get("id")));
+        intent.putExtra("id", String.valueOf(slider.getBundle().get("id_lapak")));
+        intent.putExtra("id_mitra", String.valueOf(slider.getBundle().get("id_mitra")));
+        intent.putExtra("id_kategori", String.valueOf(slider.getBundle().get("id_kategori")));
+        intent.putExtra("nama", String.valueOf(slider.getBundle().get("nama_lapak")));
+        intent.putExtra("detail", String.valueOf(slider.getBundle().get("detail_lapak")));
+        intent.putExtra("stok", String.valueOf(slider.getBundle().get("stok_lapak")));
+        intent.putExtra("harga", String.valueOf(slider.getBundle().get("harga_lapak")));
+        intent.putExtra("status", String.valueOf(slider.getBundle().get("status_lapak")));
+        intent.putExtra("nama_mitra", String.valueOf(slider.getBundle().get("nama_mitra")));
+        intent.putExtra("nama_kategori", String.valueOf(slider.getBundle().get("nama_kategori")));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
@@ -215,6 +224,8 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
                                 lapakModel.setStok(obj.getString("stok_lapak"));
                                 lapakModel.setHarga(obj.getString("harga_lapak"));
                                 lapakModel.setStatus(obj.getString("status_lapak"));
+                                lapakModel.setNamaMitra(obj.getString("nama_mitra"));
+                                lapakModel.setNamaKategori(obj.getString("nama_kategori"));
 
                                 JSONArray jsonArray2 = obj.getJSONArray(TAG_LAPAK_PHOTO);
                                 String lapak_photo = "noimage.png";
@@ -319,6 +330,8 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
                                 lapakModel.setStok(jsonObject.getString("stok_lapak"));
                                 lapakModel.setHarga(jsonObject.getString("harga_lapak"));
                                 lapakModel.setStatus(jsonObject.getString("status_lapak"));
+                                lapakModel.setNamaMitra(jsonObject.getString("nama_mitra"));
+                                lapakModel.setNamaKategori(jsonObject.getString("nama_kategori"));
 
                                 JSONArray jsonArray2 = jsonObject.getJSONArray(TAG_LAPAK_PHOTO);
                                 String lapak_photo = "noimage.png";

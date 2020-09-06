@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chairul.sipp_app.LapakActivity;
 import com.chairul.sipp_app.LapakDetailActivity;
 import com.chairul.sipp_app.R;
 import com.chairul.sipp_app.model.LapakModel;
@@ -63,7 +64,7 @@ public class RVLapakAdapter extends RecyclerView.Adapter<RVLapakAdapter.ViewHold
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, LapakDetailActivity.class);
+                Intent intent = new Intent(context, LapakActivity.class);
                 intent.putExtra("id", lapakModel.getIdLapak());
                 intent.putExtra("id_mitra", lapakModel.getIdMitra());
                 intent.putExtra("id_kategori", lapakModel.getIdKategori());
@@ -73,6 +74,8 @@ public class RVLapakAdapter extends RecyclerView.Adapter<RVLapakAdapter.ViewHold
                 intent.putExtra("harga", lapakModel.getHarga());
                 intent.putExtra("status", lapakModel.getStatus());
                 intent.putExtra("photo", lapakModel.getPhoto());
+                intent.putExtra("nama_mitra", lapakModel.getNamaMitra());
+                intent.putExtra("nama_kategori", lapakModel.getNamaKategori());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
