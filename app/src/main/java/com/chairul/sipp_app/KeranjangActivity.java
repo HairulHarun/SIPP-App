@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
+import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,7 +64,8 @@ public class KeranjangActivity extends AppCompatActivity {
     private static final String TAG_HASIL = "hasil";
     private static final String TAG_KERANJANG = "keranjang";
 
-    private TextView txtNamaMitra, txtNoRek, txtTotal;
+    private ScrollView scrollView;
+    private TextView txtNamaMitra, txtNoRek, txtTotal, txtKosong;
     private Button btnSimpan;
 
     private KoneksiAdapter koneksiAdapter;
@@ -88,7 +91,9 @@ public class KeranjangActivity extends AppCompatActivity {
         txtNamaMitra = (TextView) findViewById(R.id.txtKeranjangMitra);
         txtNoRek = (TextView) findViewById(R.id.txtKeranjangNorek);
         txtTotal = (TextView) findViewById(R.id.txtKeranjangTotal);
+        txtKosong = (TextView) findViewById(R.id.txtKeranjangKosong);
         btnSimpan = (Button) findViewById(R.id.btnKeranjangBayar);
+        scrollView = (ScrollView) findViewById(R.id.scrollView3);
 
         mRecyclerView = (RecyclerView)findViewById(R.id.rvKeranjang);
         keranjangModelList = new ArrayList<>();
@@ -97,7 +102,7 @@ public class KeranjangActivity extends AppCompatActivity {
     }
 
     private void initRV(){
-        adapter = new RVKeranjangAdapter(getApplicationContext(), keranjangModelList);
+        adapter = new RVKeranjangAdapter(KeranjangActivity.this, getApplicationContext(), keranjangModelList);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -165,15 +170,17 @@ public class KeranjangActivity extends AppCompatActivity {
                 try {
                     JSONObject jObj = new JSONObject(response.toString());
                     success = jObj.getInt(TAG_SUCCESS);
-                    total = jObj.getInt("total");
-                    nama_mitra = jObj.getString("nama_mitra");
-                    norek_mitra = jObj.getString("norek_mitra");
-
-                    txtTotal.setText("Rp. "+String.valueOf(total));
-                    txtNamaMitra.setText(nama_mitra);
-                    txtNoRek.setText(norek_mitra);
-
                     if (success == 1) {
+                        txtKosong.setVisibility(View.GONE);
+                        scrollView.setVisibility(View.VISIBLE);
+
+                        total = jObj.getInt("total");
+                        nama_mitra = jObj.getString("nama_mitra");
+                        norek_mitra = jObj.getString("norek_mitra");
+
+                        txtTotal.setText("Rp. "+String.valueOf(total));
+                        txtNamaMitra.setText(nama_mitra);
+                        txtNoRek.setText(norek_mitra);
 
                         keranjangModelList.clear();
 
@@ -218,6 +225,8 @@ public class KeranjangActivity extends AppCompatActivity {
                         });
 
                     } else {
+                        scrollView.setVisibility(View.GONE);
+                        txtKosong.setVisibility(View.VISIBLE);
                         Toast.makeText(getApplicationContext(), jObj.getString(TAG_KERANJANG), Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
                     }
@@ -301,6 +310,10 @@ public class KeranjangActivity extends AppCompatActivity {
         });
 
         VolleyAdapter.getInstance().addToRequestQueue(strReq, "volley");
+    }
+
+    public void onBackPressed(){
+        startActivity(new Intent(KeranjangActivity.this, MainActivity.class));
     }
 
     private void showSettingsDialog() {

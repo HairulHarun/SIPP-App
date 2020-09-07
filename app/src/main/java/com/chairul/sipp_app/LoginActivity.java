@@ -189,7 +189,11 @@ public class LoginActivity extends AppCompatActivity {
                         sessionAdapter.createLoginSession(status, id, nama, alamat, hp, norek, username, password, photo);
 
                         // Memanggil main activity
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        if (status.equals("Mitra")){
+                            startActivity(new Intent(LoginActivity.this, MitraActivity.class));
+                        }else{
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        }
                     } else {
                         Toast.makeText(getApplicationContext(), "Json Error: " + jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
                     }

@@ -28,6 +28,9 @@ public class URLAdapter {
     public String simpanTransaksi(){
         return URL = URL+"ws-simpan-transaksi.php";
     }
+    public String hapusKeranjang(){
+        return URL = URL+"ws-hapus-keranjang.php";
+    }
 
     public String getPhotoLapak(){
         return URL = URL_PHOTO+"lapak-photo/";
