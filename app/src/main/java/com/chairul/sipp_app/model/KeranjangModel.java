@@ -1,12 +1,12 @@
 package com.chairul.sipp_app.model;
 
 public class KeranjangModel {
-    String idKeranjang, idUsers, idLapak, tanggalPakai, keterangan, jumlah, namaUsers, namaLapak, namaMitra, norekMitra, total;
+    String idKeranjang, idUsers, idLapak, tanggalPakai, keterangan, jumlah, namaUsers, namaLapak, namaMitra, norekMitra, subTotal, total;
 
     public KeranjangModel() {
     }
 
-    public KeranjangModel(String idKeranjang, String idUsers, String idLapak, String tanggalPakai, String keterangan, String jumlah, String namaUsers, String namaLapak, String namaMitra, String norekMitra, String total) {
+    public KeranjangModel(String idKeranjang, String idUsers, String idLapak, String tanggalPakai, String keterangan, String jumlah, String namaUsers, String namaLapak, String namaMitra, String norekMitra, String subTotal, String total) {
         this.idKeranjang = idKeranjang;
         this.idUsers = idUsers;
         this.idLapak = idLapak;
@@ -17,6 +17,7 @@ public class KeranjangModel {
         this.namaLapak = namaLapak;
         this.namaMitra = namaMitra;
         this.norekMitra = norekMitra;
+        this.subTotal = subTotal;
         this.total = total;
     }
 
@@ -106,5 +107,13 @@ public class KeranjangModel {
 
     public void setTotal(String total) {
         this.total = total;
+    }
+
+    public String getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(String subTotal) {
+        this.subTotal = subTotal;
     }
 }

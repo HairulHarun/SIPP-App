@@ -49,7 +49,7 @@ public class RVKeranjangAdapter extends RecyclerView.Adapter<RVKeranjangAdapter.
         holder.txtCardNama.setText(keranjangModel.getNamaLapak());
         holder.txtCardTanggal.setText(keranjangModel.getTanggalPakai());
         holder.txtCardKet.setText(keranjangModel.getKeterangan());
-        holder.txtCardJumlah.setText("Rp. "+keranjangModel.getTotal());
+        holder.txtCardJumlah.setText("Rp. "+keranjangModel.getSubTotal());
 
         setAnimation(holder.itemView, position);
     }

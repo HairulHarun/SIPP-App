@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.chairul.sipp_app.adapter.HttpsTrustManagerAdapter;
@@ -32,6 +34,7 @@ import com.chairul.sipp_app.adapter.URLAdapter;
 import com.chairul.sipp_app.adapter.VolleyAdapter;
 import com.chairul.sipp_app.model.KeranjangModel;
 import com.chairul.sipp_app.model.LapakModel;
+import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -56,9 +59,9 @@ public class KeranjangActivity extends AppCompatActivity {
     private static final String TAG = KeranjangActivity.class.getSimpleName();
     private static final String TAG_SUCCESS = "sukses";
     private static final String TAG_MESSAGE = "message";
+    private static final String TAG_HASIL = "hasil";
     private static final String TAG_KERANJANG = "keranjang";
 
-    private RecyclerView recyclerView;
     private TextView txtNamaMitra, txtNoRek, txtTotal;
     private Button btnSimpan;
 
@@ -85,6 +88,7 @@ public class KeranjangActivity extends AppCompatActivity {
         txtNamaMitra = (TextView) findViewById(R.id.txtKeranjangMitra);
         txtNoRek = (TextView) findViewById(R.id.txtKeranjangNorek);
         txtTotal = (TextView) findViewById(R.id.txtKeranjangTotal);
+        btnSimpan = (Button) findViewById(R.id.btnKeranjangBayar);
 
         mRecyclerView = (RecyclerView)findViewById(R.id.rvKeranjang);
         keranjangModelList = new ArrayList<>();
@@ -165,13 +169,15 @@ public class KeranjangActivity extends AppCompatActivity {
                     nama_mitra = jObj.getString("nama_mitra");
                     norek_mitra = jObj.getString("norek_mitra");
 
-                    txtTotal.setText(String.valueOf(total));
+                    txtTotal.setText("Rp. "+String.valueOf(total));
                     txtNamaMitra.setText(nama_mitra);
                     txtNoRek.setText(norek_mitra);
 
                     if (success == 1) {
 
                         keranjangModelList.clear();
+
+                        String id_lapak = "";
 
                         JSONArray keranjang = jObj.getJSONArray(TAG_KERANJANG);
 
@@ -186,8 +192,11 @@ public class KeranjangActivity extends AppCompatActivity {
                                 keranjangModel.setTanggalPakai(jsonObject.getString("tglpakai"));
                                 keranjangModel.setKeterangan(jsonObject.getString("keterangan"));
                                 keranjangModel.setJumlah(jsonObject.getString("jumlah"));
+                                keranjangModel.setSubTotal(jsonObject.getString("sub_total"));
                                 keranjangModel.setNamaUsers(jsonObject.getString("nama_users"));
                                 keranjangModel.setNamaLapak(jsonObject.getString("nama_lapak"));
+
+                                id_lapak = jsonObject.getString("id_lapak");
 
                                 keranjangModelList.add(keranjangModel);
 
@@ -199,6 +208,15 @@ public class KeranjangActivity extends AppCompatActivity {
 
                         adapter.notifyDataSetChanged();
                         progressDialog.dismiss();
+
+                        final String finalId_lapak = id_lapak;
+                        btnSimpan.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                prosesPesanan(finalId_lapak);
+                            }
+                        });
+
                     } else {
                         Toast.makeText(getApplicationContext(), jObj.getString(TAG_KERANJANG), Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
@@ -224,6 +242,63 @@ public class KeranjangActivity extends AppCompatActivity {
             }
 
         };
+
+        VolleyAdapter.getInstance().addToRequestQueue(strReq, "volley");
+    }
+
+    private void prosesPesanan(final String id_lapak) {
+        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().simpanTransaksi(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jObj = new JSONObject(response.toString());
+                    success = jObj.getInt(TAG_SUCCESS);
+                    if (success == 1) {
+
+                        Toast.makeText(getApplicationContext(), jObj.getString(TAG_HASIL), Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent(KeranjangActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), jObj.getString(TAG_HASIL), Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Volley", error.toString());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id_users", sessionAdapter.getId());
+                params.put("id_lapak", id_lapak);
+
+                return params;
+            }
+
+        };
+
+        strReq.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
 
         VolleyAdapter.getInstance().addToRequestQueue(strReq, "volley");
     }

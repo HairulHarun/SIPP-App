@@ -275,6 +275,8 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
                                 textSliderView.getBundle().putString("stok_lapak", obj.getString("stok_lapak"));
                                 textSliderView.getBundle().putString("harga_lapak", obj.getString("harga_lapak"));
                                 textSliderView.getBundle().putString("status_lapak", obj.getString("status_lapak"));
+                                textSliderView.getBundle().putString("nama_mitra", obj.getString("nama_mitra"));
+                                textSliderView.getBundle().putString("nama_kategori", obj.getString("nama_kategori"));
 
                                 sliderLayout.addSlider(textSliderView);
 
