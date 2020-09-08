@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MitraActivity"></activity>
+        <activity android:name=".TransaksiDetailActivity"></activity>
+        <activity android:name=".TransaksiActivity" />
+        <activity android:name=".MitraActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".KeranjangActivity" />
         <activity android:name=".ProfileActivity" />

@@ -33,7 +33,7 @@
             android:background="@color/colorWhite"
             android:paddingLeft="10dp"
             android:paddingRight="5dp"
-            android:text="Outlet Favorit"
+            android:text="Lapak Favorit"
             android:textColor="@color/colorBlack"
             android:textStyle="bold"/>
 
@@ -51,7 +51,7 @@
             android:background="@color/colorWhite"
             android:paddingLeft="10dp"
             android:paddingRight="5dp"
-            android:text="Data Outlet"
+            android:text="Data Lapak"
             android:textColor="@color/colorBlack"
             android:textStyle="bold" />
 

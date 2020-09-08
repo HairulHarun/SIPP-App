@@ -108,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
         int id = item.getItemId();
         if (id == R.id.action_keranjang) {
             startActivity(new Intent(MainActivity.this, KeranjangActivity.class));
+        }else if (id == R.id.action_transaksi) {
+            startActivity(new Intent(MainActivity.this, TransaksiActivity.class));
         }else if (id == R.id.action_profile) {
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         }else if (id == R.id.action_about) {
@@ -138,6 +140,10 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
         intent.putExtra("nama_kategori", String.valueOf(slider.getBundle().get("nama_kategori")));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    public void onBackPressed(){
+        moveTaskToBack(true);
     }
 
     private void initRV(){

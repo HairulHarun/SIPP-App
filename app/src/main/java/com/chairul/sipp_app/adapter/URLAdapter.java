@@ -16,6 +16,9 @@ public class URLAdapter {
     public String getKeranjang(){
         return URL = URL+"ws-get-keranjang-users.php";
     }
+    public String getTransaksi(){
+        return URL = URL+"ws-get-transaksi-users.php";
+    }
     public String getLapakRandom(){
         return URL = URL+"ws-get-lapak-random.php";
     }

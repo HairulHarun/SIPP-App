@@ -9,6 +9,12 @@
         android:title="Keranjang" />
 
     <item
+        android:id="@+id/action_transaksi"
+        android:icon="@drawable/ic_transaksi"
+        app:showAsAction="always"
+        android:title="Transaksi" />
+
+    <item
         android:id="@+id/action_profile"
         android:icon="@drawable/ic_users"
         app:showAsAction="ifRoom"
