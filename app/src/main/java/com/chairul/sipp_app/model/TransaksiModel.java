@@ -1,17 +1,18 @@
 package com.chairul.sipp_app.model;
 
 public class TransaksiModel {
-    String id, idUsers, idLapak, idMitra, namaMitra, status, subTotal;
+    String id, idUsers, idLapak, idMitra, namaMitra, bukti, status, subTotal;
 
     public TransaksiModel() {
     }
 
-    public TransaksiModel(String id, String idUsers, String idLapak, String idMitra, String namaMitra, String status, String subTotal) {
+    public TransaksiModel(String id, String idUsers, String idLapak, String idMitra, String namaMitra, String bukti, String status, String subTotal) {
         this.id = id;
         this.idUsers = idUsers;
         this.idLapak = idLapak;
         this.idMitra = idMitra;
         this.namaMitra = namaMitra;
+        this.bukti = bukti;
         this.status = status;
         this.subTotal = subTotal;
     }
@@ -54,6 +55,14 @@ public class TransaksiModel {
 
     public void setNamaMitra(String namaMitra) {
         this.namaMitra = namaMitra;
+    }
+
+    public String getBukti() {
+        return bukti;
+    }
+
+    public void setBukti(String bukti) {
+        this.bukti = bukti;
     }
 
     public String getStatus() {

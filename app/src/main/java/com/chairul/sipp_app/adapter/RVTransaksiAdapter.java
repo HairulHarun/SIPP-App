@@ -84,6 +84,7 @@ public class RVTransaksiAdapter extends RecyclerView.Adapter<RVTransaksiAdapter.
                 intent.putExtra("id_users", transaksiModel.getIdUsers());
                 intent.putExtra("id_mitra", transaksiModel.getIdMitra());
                 intent.putExtra("nama_mitra", transaksiModel.getNamaMitra());
+                intent.putExtra("bukti", transaksiModel.getBukti());
                 intent.putExtra("status", transaksiModel.getStatus());
                 intent.putExtra("sub_total", transaksiModel.getSubTotal());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

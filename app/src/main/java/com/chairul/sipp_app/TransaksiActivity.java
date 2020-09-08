@@ -173,6 +173,7 @@ public class TransaksiActivity extends AppCompatActivity {
                                 transaksiModel.setIdLapak(jsonObject.getString("id_lapak"));
                                 transaksiModel.setIdMitra(jsonObject.getString("id_mitra"));
                                 transaksiModel.setNamaMitra(jsonObject.getString("nama_mitra"));
+                                transaksiModel.setBukti(jsonObject.getString("bukti"));
                                 transaksiModel.setStatus(jsonObject.getString("status"));
                                 transaksiModel.setSubTotal(jsonObject.getString("sub_total"));
 

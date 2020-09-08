@@ -10,13 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp"
-        android:paddingRight="10dp"
-        android:background="@color/colorTransparant"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/txtCardTransaksiDetailQty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1X"
+            android:textColor="@color/colorAccent" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,66 +30,46 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtCardTransaksiNamaMitra"
+                android:id="@+id/txtCardTransaksiDetailNama"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:textStyle="bold"
-                android:text="Nama Mitra"
+                android:text="Aqua Gelas 500 ml"
                 android:textColor="@color/colorBlack" />
 
             <TextView
-                android:id="@+id/txtCardTransaksiStatus"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtCardTransaksiDetailTanggal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
                 android:layout_marginLeft="20dp"
-                android:text="Menunggu Pembayaran" />
+                android:text="Tanggal : " />
 
+            <TextView
+                android:id="@+id/txtCardTransaksiDetailKet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Keterangan : " />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtCardTransaksiSubTotal"
+                android:id="@+id/txtCardTransaksiDetailJumlah"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:text="Rp. 5000"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorBlack"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/txtCardTransaksiId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/txtCardTransaksiIdUsers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/txtCardTransaksiIdLapak"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/txtCardTransaksiIdMitra"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
 
     </LinearLayout>
 
