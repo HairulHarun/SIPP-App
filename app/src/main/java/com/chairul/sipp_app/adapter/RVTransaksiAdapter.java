@@ -65,7 +65,7 @@ public class RVTransaksiAdapter extends RecyclerView.Adapter<RVTransaksiAdapter.
     public void onBindViewHolder(RVTransaksiAdapter.ViewHolder holder, int position) {
         final TransaksiModel transaksiModel = list.get(position);
 
-        holder.txtCardNamaMitra.setText(transaksiModel.getNamaMitra());
+        holder.txtCardNamaMitra.setText(transaksiModel.getKode());
         holder.txtCardStatus.setText(transaksiModel.getStatus());
         holder.txtCardId.setText(transaksiModel.getId());
         holder.txtCardIdUsers.setText(transaksiModel.getIdUsers());
@@ -84,6 +84,7 @@ public class RVTransaksiAdapter extends RecyclerView.Adapter<RVTransaksiAdapter.
                 intent.putExtra("id_users", transaksiModel.getIdUsers());
                 intent.putExtra("id_mitra", transaksiModel.getIdMitra());
                 intent.putExtra("nama_mitra", transaksiModel.getNamaMitra());
+                intent.putExtra("kode", transaksiModel.getKode());
                 intent.putExtra("bukti", transaksiModel.getBukti());
                 intent.putExtra("status", transaksiModel.getStatus());
                 intent.putExtra("sub_total", transaksiModel.getSubTotal());

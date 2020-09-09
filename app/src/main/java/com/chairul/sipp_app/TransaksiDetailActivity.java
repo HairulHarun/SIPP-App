@@ -77,7 +77,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
     String nama_mitra, norek_mitra, status_transaksi;
 
     private Intent intent;
-    private String intent_id, intent_idlapak, intent_idusers, intent_idmitra, intent_namamitra, intent_bukti, intent_status, intent_subtotal;
+    private String intent_id, intent_idlapak, intent_idusers, intent_idmitra, intent_kode, intent_namamitra, intent_bukti, intent_status, intent_subtotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +92,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
         intent_idlapak = intent.getStringExtra("id_lapak");
         intent_idusers = intent.getStringExtra("id_users");
         intent_idmitra = intent.getStringExtra("id_mitra");
+        intent_kode = intent.getStringExtra("kode");
         intent_namamitra = intent.getStringExtra("nama_mitra");
         intent_bukti = intent.getStringExtra("bukti");
         intent_status = intent.getStringExtra("status");
@@ -116,7 +117,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TransaksiDetailActivity.this, UploadBuktiActivity.class);
-                intent.putExtra("id_mitra", intent_idmitra);
+                intent.putExtra("kode", intent_kode);
                 startActivity(intent);
             }
         });
@@ -139,7 +140,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                         // check if all permissions are granted
                         if (report.areAllPermissionsGranted()) {
                             if (isInternetPresent = koneksiAdapter.isConnectingToInternet()) {
-                                getDataTransaksiDetail(intent_idmitra);
+                                getDataTransaksiDetail(intent_kode);
                             }else{
                                 SnackbarManager.show(
                                         com.nispok.snackbar.Snackbar.with(TransaksiDetailActivity.this)
@@ -179,13 +180,13 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                 .check();
     }
 
-    private void getDataTransaksiDetail(final String id_mitra) {
+    private void getDataTransaksiDetail(final String kode) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
         HttpsTrustManagerAdapter.allowAllSSL();
-        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getTransaksiDetail(), new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getTransaksiUsersDetail(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -272,7 +273,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id_mitra", id_mitra);
+                params.put("kode", kode);
 
                 return params;
             }

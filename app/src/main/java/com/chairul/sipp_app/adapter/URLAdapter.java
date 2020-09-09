@@ -19,8 +19,11 @@ public class URLAdapter {
     public String getTransaksi(){
         return URL = URL+"ws-get-transaksi-users.php";
     }
-    public String getTransaksiDetail(){
+    public String getTransaksiMitra(){
         return URL = URL+"ws-get-transaksi-mitra.php";
+    }
+    public String getTransaksiUsersDetail(){
+        return URL = URL+"ws-get-transaksi-users-detail.php";
     }
     public String getLapakRandom(){
         return URL = URL+"ws-get-lapak-random.php";

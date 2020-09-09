@@ -50,7 +50,7 @@ public class UploadBuktiActivity extends AppCompatActivity {
 
     String tag_json_obj = "json_obj_req";
     Intent intent;
-    String id_mitra;
+    String kode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class UploadBuktiActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView);
 
         intent = getIntent();
-        id_mitra = intent.getStringExtra("id_mitra");
+        kode = intent.getStringExtra("kode");
 
         buttonChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +74,7 @@ public class UploadBuktiActivity extends AppCompatActivity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImage(id_mitra);
+                uploadImage(kode);
             }
         });
     }
@@ -87,7 +87,7 @@ public class UploadBuktiActivity extends AppCompatActivity {
         return encodedImage;
     }
 
-    private void uploadImage(final String id_mitra) {
+    private void uploadImage(final String kode) {
         final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
         HttpsTrustManagerAdapter.allowAllSSL();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, new URLAdapter().uploadBukti(),
@@ -129,7 +129,7 @@ public class UploadBuktiActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("image", getStringImage(decoded));
-                params.put("id_mitra", id_mitra);
+                params.put("kode", kode);
 
                 Log.e(TAG, "" + params);
                 return params;

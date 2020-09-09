@@ -1,8 +1,4 @@
-package com.chairul.sipp_app;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.chairul.sipp_app.fragment;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -13,24 +9,30 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ScrollView;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.chairul.sipp_app.MitraActivity;
+import com.chairul.sipp_app.R;
+import com.chairul.sipp_app.TransaksiActivity;
 import com.chairul.sipp_app.adapter.HttpsTrustManagerAdapter;
 import com.chairul.sipp_app.adapter.KoneksiAdapter;
-import com.chairul.sipp_app.adapter.RVKeranjangAdapter;
 import com.chairul.sipp_app.adapter.RVTransaksiAdapter;
 import com.chairul.sipp_app.adapter.SessionAdapter;
 import com.chairul.sipp_app.adapter.URLAdapter;
 import com.chairul.sipp_app.adapter.VolleyAdapter;
-import com.chairul.sipp_app.model.KeranjangModel;
 import com.chairul.sipp_app.model.TransaksiModel;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -51,8 +53,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TransaksiActivity extends AppCompatActivity {
-    private static final String TAG = TransaksiActivity.class.getSimpleName();
+public class HomeFragment extends Fragment{
+    private static final String TAG = MitraActivity.class.getSimpleName();
     private static final String TAG_SUCCESS = "sukses";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_HASIL = "hasil";
@@ -71,29 +73,29 @@ public class TransaksiActivity extends AppCompatActivity {
 
     int success;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transaksi);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        sessionAdapter = new SessionAdapter(getApplicationContext());
-        koneksiAdapter = new KoneksiAdapter(getApplicationContext());
+        sessionAdapter = new SessionAdapter(getActivity().getApplicationContext());
+        koneksiAdapter = new KoneksiAdapter(getActivity().getApplicationContext());
 
-        txtKosong = (TextView) findViewById(R.id.txtTransaksiKosong);
-        mRecyclerView = (RecyclerView)findViewById(R.id.rvTransaksi);
+        txtKosong = (TextView) root.findViewById(R.id.txtTransaksiKosong);
+        mRecyclerView = (RecyclerView) root.findViewById(R.id.rvTransaksi);
         transaksiModelList = new ArrayList<>();
 
         initRV();
+
+        return root;
     }
 
     private void initRV(){
-        adapter = new RVTransaksiAdapter(TransaksiActivity.this, getApplicationContext(), transaksiModelList);
-        mLayoutManager = new LinearLayoutManager(this);
+        adapter = new RVTransaksiAdapter(getActivity(), getActivity().getApplicationContext(), transaksiModelList);
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
 
-        Dexter.withActivity(this)
+        Dexter.withActivity(getActivity())
                 .withPermissions(
                         android.Manifest.permission.INTERNET,
                         Manifest.permission.ACCESS_NETWORK_STATE)
@@ -106,7 +108,7 @@ public class TransaksiActivity extends AppCompatActivity {
                                 getDataTransaksi();
                             }else{
                                 SnackbarManager.show(
-                                        com.nispok.snackbar.Snackbar.with(TransaksiActivity.this)
+                                        com.nispok.snackbar.Snackbar.with(getActivity())
                                                 .text("No Connection !")
                                                 .duration(com.nispok.snackbar.Snackbar.SnackbarDuration.LENGTH_INDEFINITE)
                                                 .actionLabel("Refresh")
@@ -116,7 +118,7 @@ public class TransaksiActivity extends AppCompatActivity {
                                                         refresh();
                                                     }
                                                 })
-                                        , TransaksiActivity.this);
+                                        , getActivity());
                             }
 
                         }
@@ -136,7 +138,7 @@ public class TransaksiActivity extends AppCompatActivity {
                 withErrorListener(new PermissionRequestErrorListener() {
                     @Override
                     public void onError(DexterError error) {
-                        Toast.makeText(getApplicationContext(), "Error occurred! ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "Error occurred! ", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .onSameThread()
@@ -144,12 +146,12 @@ public class TransaksiActivity extends AppCompatActivity {
     }
 
     private void getDataTransaksi() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
         HttpsTrustManagerAdapter.allowAllSSL();
-        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getTransaksi(), new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getTransaksiMitra(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -192,7 +194,7 @@ public class TransaksiActivity extends AppCompatActivity {
                     } else {
                         mRecyclerView.setVisibility(View.GONE);
                         txtKosong.setVisibility(View.VISIBLE);
-                        Toast.makeText(getApplicationContext(), jObj.getString(TAG_TRANSAKSI), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(), jObj.getString(TAG_TRANSAKSI), Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
                     }
                 } catch (JSONException e) {
@@ -210,7 +212,7 @@ public class TransaksiActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id_users", sessionAdapter.getId());
+                params.put("id_mitra", sessionAdapter.getId());
 
                 return params;
             }
@@ -221,7 +223,7 @@ public class TransaksiActivity extends AppCompatActivity {
     }
 
     private void showSettingsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity().getApplicationContext());
         builder.setTitle("Need Permissions");
         builder.setMessage("This app needs permission to use this feature. You can grant them in app settings.");
         builder.setPositiveButton("GOTO SETTINGS", new DialogInterface.OnClickListener() {
@@ -242,13 +244,13 @@ public class TransaksiActivity extends AppCompatActivity {
 
     private void openSettings() {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
         intent.setData(uri);
         startActivityForResult(intent, 101);
     }
 
     private void refresh(){
-        Intent intent = getIntent();
+        Intent intent = getActivity().getIntent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
