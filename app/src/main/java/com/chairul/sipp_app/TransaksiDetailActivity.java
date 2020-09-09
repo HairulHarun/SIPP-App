@@ -61,7 +61,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
 
     private ScrollView scrollView;
     private TextView txtNamaMitra, txtNoRek, txtStatus, txtTotal, txtPenjelasan, txtPenjelasanMitra, txtKetBukti;
-    private Button btnUpload, btnTerima, btnTolak;
+    private Button btnUpload, btnBatal, btnTerima, btnTolak;
     private ImageView imgBukti;
 
     private KoneksiAdapter koneksiAdapter;
@@ -106,6 +106,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
         txtPenjelasanMitra = (TextView) findViewById(R.id.txtTransaksiDetailPenjelasanMitra);
         txtKetBukti = (TextView) findViewById(R.id.txtTransaksiDetailBukti);
         btnUpload = (Button) findViewById(R.id.btnTransaksiDetailUpload);
+        btnBatal = (Button) findViewById(R.id.btnTransaksiDetailBatalkan);
         btnTolak = (Button) findViewById(R.id.btnTransaksiDetailVerifikasi1);
         btnTerima = (Button) findViewById(R.id.btnTransaksiDetailVerifikasi2);
         imgBukti = (ImageView) findViewById(R.id.imgTransaksiDetailBukti);
@@ -212,6 +213,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                             if (status_transaksi.equals("Menunggu Pembayaran")){
                                 txtPenjelasan.setVisibility(View.GONE);
                                 btnUpload.setVisibility(View.GONE);
+                                btnBatal.setVisibility(View.GONE);
                                 txtKetBukti.setVisibility(View.GONE);
                                 imgBukti.setVisibility(View.GONE);
 
@@ -222,6 +224,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                             }else if (status_transaksi.equals("Menunggu Verifikasi")){
                                 txtPenjelasan.setVisibility(View.GONE);
                                 btnUpload.setVisibility(View.GONE);
+                                btnBatal.setVisibility(View.GONE);
                                 txtKetBukti.setVisibility(View.GONE);
                                 imgBukti.setVisibility(View.VISIBLE);
 
@@ -252,6 +255,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                             }else if (status_transaksi.equals("Pembayaran Di Verifikasi")){
                                 txtPenjelasan.setVisibility(View.GONE);
                                 btnUpload.setVisibility(View.GONE);
+                                btnBatal.setVisibility(View.GONE);
                                 txtKetBukti.setVisibility(View.GONE);
                                 imgBukti.setVisibility(View.VISIBLE);
 
@@ -270,6 +274,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                             }else if (status_transaksi.equals("Pembayaran Di Tolak")){
                                 txtPenjelasan.setVisibility(View.GONE);
                                 btnUpload.setVisibility(View.GONE);
+                                btnBatal.setVisibility(View.GONE);
                                 txtKetBukti.setVisibility(View.GONE);
                                 imgBukti.setVisibility(View.VISIBLE);
 
@@ -289,6 +294,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                             if (status_transaksi.equals("Menunggu Pembayaran")){
                                 txtPenjelasan.setVisibility(View.VISIBLE);
                                 btnUpload.setVisibility(View.VISIBLE);
+                                btnBatal.setVisibility(View.VISIBLE);
                                 txtKetBukti.setVisibility(View.GONE);
                                 imgBukti.setVisibility(View.GONE);
 
@@ -296,9 +302,17 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                                 btnTerima.setVisibility(View.GONE);
                                 btnTolak.setVisibility(View.GONE);
 
+                                btnBatal.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        updateStatus(intent_kode, "Selesai");
+                                    }
+                                });
+
                             }else if (status_transaksi.equals("Menunggu Verifikasi")){
                                 txtPenjelasan.setVisibility(View.GONE);
                                 btnUpload.setVisibility(View.GONE);
+                                btnBatal.setVisibility(View.GONE);
                                 txtKetBukti.setVisibility(View.VISIBLE);
                                 imgBukti.setVisibility(View.VISIBLE);
 
@@ -312,6 +326,12 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                                         .error(R.mipmap.ic_launcher_round)
                                         .into(imgBukti);
                             }else if (status_transaksi.equals("Pembayaran Di Verifikasi")){
+                                txtPenjelasan.setVisibility(View.GONE);
+                                btnUpload.setVisibility(View.GONE);
+                                btnBatal.setVisibility(View.GONE);
+                                txtKetBukti.setVisibility(View.GONE);
+                                imgBukti.setVisibility(View.GONE);
+
                                 txtPenjelasan.setVisibility(View.VISIBLE);
                                 txtPenjelasan.setText("Selamat, Pesanan Anda Telah Di Terima. Silahkan Tunggu Pihak Mitra Mengkonfirmasi Anda !");
 
@@ -319,8 +339,25 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                                 btnTerima.setVisibility(View.GONE);
                                 btnTolak.setVisibility(View.GONE);
                             }else if (status_transaksi.equals("Pembayaran Di Tolak")){
+                                txtKetBukti.setVisibility(View.GONE);
+                                imgBukti.setVisibility(View.GONE);
+                                btnUpload.setVisibility(View.GONE);
+                                btnBatal.setVisibility(View.GONE);
+
                                 txtPenjelasan.setVisibility(View.VISIBLE);
                                 txtPenjelasan.setText("Maaf, Pesanan Anda Di Tolak. Silahkan Hubungi Mitra Untuk Melakukan Konfirmasi Pesanan Anda !");
+
+                                txtPenjelasanMitra.setVisibility(View.GONE);
+                                btnTerima.setVisibility(View.GONE);
+                                btnTolak.setVisibility(View.GONE);
+                            }else if (status_transaksi.equals("Selesai")){
+                                txtKetBukti.setVisibility(View.GONE);
+                                imgBukti.setVisibility(View.GONE);
+                                btnUpload.setVisibility(View.GONE);
+                                btnBatal.setVisibility(View.GONE);
+
+                                txtPenjelasan.setVisibility(View.VISIBLE);
+                                txtPenjelasan.setText("Pesanan ini telah di BATALKAN !");
 
                                 txtPenjelasanMitra.setVisibility(View.GONE);
                                 btnTerima.setVisibility(View.GONE);
@@ -404,6 +441,8 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                             if (success == 1) {
                                 Log.e("v Add", jObj.toString());
                                 Toast.makeText(TransaksiDetailActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+
+                                startActivity(new Intent(TransaksiDetailActivity.this, MainActivity.class));
                             } else {
                                 Toast.makeText(TransaksiDetailActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
                             }

@@ -168,6 +168,14 @@
                     android:text="UPLOAD BUKTI BAYAR"
                     android:textColor="@color/colorWhite" />
 
+                <Button
+                    android:id="@+id/btnTransaksiDetailBatalkan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorRed"
+                    android:text="BATALAKAN PESANAN"
+                    android:textColor="@color/colorWhite" />
+
             </LinearLayout>
 
             <LinearLayout
