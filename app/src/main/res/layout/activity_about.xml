@@ -8,10 +8,10 @@
     tools:context=".AboutActivity">
 
     <RelativeLayout
-        android:id="@+id/layout"
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg"
+        android:background="@drawable/animation_list"
         android:padding="20dp">
 
         <ScrollView
@@ -53,7 +53,7 @@
             android:layout_marginBottom="20dp"
             android:text="@string/versi"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold" />
 
         <TextView

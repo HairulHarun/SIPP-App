@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">SI-Perlengkapan Pesta</string>
+    <string name="app_name">si-PEPERTA</string>
     <string name="versi">
-        SI-PP Version 1.0 2020
+        si-PEPERTA Version 1.0 2020
     </string>
     <string name="copyright">
-        Copyright @Aplikasi SI-PP 2020
+        Copyright @Aplikasi si-PEPERTA 2020
     </string>
     <string name="about">
-        SI-PP Merupakan Sebuah Aplikasi Berbasis Android untuk memudahkan peminjaman perlengkapan pesta di Kota Gorontalo
+        si-PEPERTA Merupakan Sebuah Aplikasi Berbasis Android untuk memudahkan peminjaman perlengkapan pesta di Kota Gorontalo
     </string>
 
     <string-array name="spinner_status">

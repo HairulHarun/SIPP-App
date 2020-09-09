@@ -86,6 +86,10 @@ public class TransaksiActivity extends AppCompatActivity {
         initRV();
     }
 
+    public void onBackPressed(){
+        startActivity(new Intent(TransaksiActivity.this, MainActivity.class));
+    }
+
     private void initRV(){
         adapter = new RVTransaksiAdapter(TransaksiActivity.this, getApplicationContext(), transaksiModelList);
         mLayoutManager = new LinearLayoutManager(this);

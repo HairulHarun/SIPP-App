@@ -10,9 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp"
-        android:paddingRight="10dp"
-        android:background="@color/colorTransparant"
+        android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,17 +26,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:textStyle="bold"
                 android:text="Nama Mitra"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtCardTransaksiStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
                 android:layout_marginLeft="20dp"
-                android:text="Menunggu Pembayaran" />
+                android:text="Menunggu Pembayaran"
+                android:textColor="@color/colorAccent" />
 
         </LinearLayout>
 
