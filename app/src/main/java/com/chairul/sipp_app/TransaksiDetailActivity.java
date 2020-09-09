@@ -60,8 +60,8 @@ public class TransaksiDetailActivity extends AppCompatActivity {
     private static final String TAG_TRANSAKSI = "transaksi";
 
     private ScrollView scrollView;
-    private TextView txtNamaMitra, txtNoRek, txtStatus, txtTotal, txtPenjelasan, txtKetBukti;
-    private Button btnUpload;
+    private TextView txtNamaMitra, txtNoRek, txtStatus, txtTotal, txtPenjelasan, txtPenjelasanMitra, txtKetBukti;
+    private Button btnUpload, btnTerima, btnTolak;
     private ImageView imgBukti;
 
     private KoneksiAdapter koneksiAdapter;
@@ -103,8 +103,11 @@ public class TransaksiDetailActivity extends AppCompatActivity {
         txtTotal = (TextView) findViewById(R.id.txtTransaksiDetailTotal);
         txtStatus = (TextView) findViewById(R.id.txtTransaksiDetailStatus);
         txtPenjelasan = (TextView) findViewById(R.id.txtTransaksiDetailPenjelasan);
+        txtPenjelasanMitra = (TextView) findViewById(R.id.txtTransaksiDetailPenjelasanMitra);
         txtKetBukti = (TextView) findViewById(R.id.txtTransaksiDetailBukti);
         btnUpload = (Button) findViewById(R.id.btnTransaksiDetailUpload);
+        btnTolak = (Button) findViewById(R.id.btnTransaksiDetailVerifikasi1);
+        btnTerima = (Button) findViewById(R.id.btnTransaksiDetailVerifikasi2);
         imgBukti = (ImageView) findViewById(R.id.imgTransaksiDetailBukti);
         scrollView = (ScrollView) findViewById(R.id.scrollView3);
 
@@ -205,22 +208,124 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                         txtNoRek.setText(norek_mitra);
                         txtStatus.setText(status_transaksi);
 
-                        if (status_transaksi.equals("Menunggu Pembayaran")){
-                            txtPenjelasan.setVisibility(View.VISIBLE);
-                            btnUpload.setVisibility(View.VISIBLE);
-                            txtKetBukti.setVisibility(View.GONE);
-                            imgBukti.setVisibility(View.GONE);
-                        }else{
-                            txtPenjelasan.setVisibility(View.GONE);
-                            btnUpload.setVisibility(View.GONE);
-                            txtKetBukti.setVisibility(View.VISIBLE);
-                            imgBukti.setVisibility(View.VISIBLE);
+                        if (sessionAdapter.getStatus().equals("Mitra")){
+                            if (status_transaksi.equals("Menunggu Pembayaran")){
+                                txtPenjelasan.setVisibility(View.GONE);
+                                btnUpload.setVisibility(View.GONE);
+                                txtKetBukti.setVisibility(View.GONE);
+                                imgBukti.setVisibility(View.GONE);
 
-                            Picasso.with(TransaksiDetailActivity.this)
-                                    .load(new URLAdapter().getPhotoBuktiPembayaran()+intent_bukti)
-                                    .placeholder(R.mipmap.ic_launcher_round)
-                                    .error(R.mipmap.ic_launcher_round)
-                                    .into(imgBukti);
+                                txtPenjelasanMitra.setVisibility(View.GONE);
+                                btnTerima.setVisibility(View.GONE);
+                                btnTolak.setVisibility(View.GONE);
+
+                            }else if (status_transaksi.equals("Menunggu Verifikasi")){
+                                txtPenjelasan.setVisibility(View.GONE);
+                                btnUpload.setVisibility(View.GONE);
+                                txtKetBukti.setVisibility(View.GONE);
+                                imgBukti.setVisibility(View.VISIBLE);
+
+                                Picasso.with(TransaksiDetailActivity.this)
+                                        .load(new URLAdapter().getPhotoBuktiPembayaran()+intent_bukti)
+                                        .placeholder(R.mipmap.ic_launcher_round)
+                                        .error(R.mipmap.ic_launcher_round)
+                                        .into(imgBukti);
+
+                                txtPenjelasanMitra.setVisibility(View.VISIBLE);
+                                btnTerima.setVisibility(View.VISIBLE);
+                                btnTolak.setVisibility(View.VISIBLE);
+
+                                btnTerima.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        updateStatus(intent_kode, "Pembayaran Di Verifikasi");
+                                    }
+                                });
+
+                                btnTolak.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        updateStatus(intent_kode, "Pembayaran Di Tolak");
+                                    }
+                                });
+
+                            }else if (status_transaksi.equals("Pembayaran Di Verifikasi")){
+                                txtPenjelasan.setVisibility(View.GONE);
+                                btnUpload.setVisibility(View.GONE);
+                                txtKetBukti.setVisibility(View.GONE);
+                                imgBukti.setVisibility(View.VISIBLE);
+
+                                txtPenjelasanMitra.setVisibility(View.VISIBLE);
+                                btnTerima.setVisibility(View.GONE);
+                                btnTolak.setVisibility(View.GONE);
+
+                                Picasso.with(TransaksiDetailActivity.this)
+                                        .load(new URLAdapter().getPhotoBuktiPembayaran()+intent_bukti)
+                                        .placeholder(R.mipmap.ic_launcher_round)
+                                        .error(R.mipmap.ic_launcher_round)
+                                        .into(imgBukti);
+
+                                txtPenjelasanMitra.setText("Pesanan ini sudah di verifikasi, Silahkan Hub. User Untuk Kepastian Pesanan");
+
+                            }else if (status_transaksi.equals("Pembayaran Di Tolak")){
+                                txtPenjelasan.setVisibility(View.GONE);
+                                btnUpload.setVisibility(View.GONE);
+                                txtKetBukti.setVisibility(View.GONE);
+                                imgBukti.setVisibility(View.VISIBLE);
+
+                                txtPenjelasanMitra.setVisibility(View.VISIBLE);
+                                btnTerima.setVisibility(View.GONE);
+                                btnTolak.setVisibility(View.GONE);
+
+                                Picasso.with(TransaksiDetailActivity.this)
+                                        .load(new URLAdapter().getPhotoBuktiPembayaran()+intent_bukti)
+                                        .placeholder(R.mipmap.ic_launcher_round)
+                                        .error(R.mipmap.ic_launcher_round)
+                                        .into(imgBukti);
+
+                                txtPenjelasanMitra.setText("Pesanan ini tidak di verifikasi, Silahkan Hub. User Untuk Kepastian Pesanan");
+                            }
+                        }else{
+                            if (status_transaksi.equals("Menunggu Pembayaran")){
+                                txtPenjelasan.setVisibility(View.VISIBLE);
+                                btnUpload.setVisibility(View.VISIBLE);
+                                txtKetBukti.setVisibility(View.GONE);
+                                imgBukti.setVisibility(View.GONE);
+
+                                txtPenjelasanMitra.setVisibility(View.GONE);
+                                btnTerima.setVisibility(View.GONE);
+                                btnTolak.setVisibility(View.GONE);
+
+                            }else if (status_transaksi.equals("Menunggu Verifikasi")){
+                                txtPenjelasan.setVisibility(View.GONE);
+                                btnUpload.setVisibility(View.GONE);
+                                txtKetBukti.setVisibility(View.VISIBLE);
+                                imgBukti.setVisibility(View.VISIBLE);
+
+                                txtPenjelasanMitra.setVisibility(View.GONE);
+                                btnTerima.setVisibility(View.GONE);
+                                btnTolak.setVisibility(View.GONE);
+
+                                Picasso.with(TransaksiDetailActivity.this)
+                                        .load(new URLAdapter().getPhotoBuktiPembayaran()+intent_bukti)
+                                        .placeholder(R.mipmap.ic_launcher_round)
+                                        .error(R.mipmap.ic_launcher_round)
+                                        .into(imgBukti);
+                            }else if (status_transaksi.equals("Pembayaran Di Verifikasi")){
+                                txtPenjelasan.setVisibility(View.VISIBLE);
+                                txtPenjelasan.setText("Selamat, Pesanan Anda Telah Di Terima. Silahkan Tunggu Pihak Mitra Mengkonfirmasi Anda !");
+
+                                txtPenjelasanMitra.setVisibility(View.GONE);
+                                btnTerima.setVisibility(View.GONE);
+                                btnTolak.setVisibility(View.GONE);
+                            }else if (status_transaksi.equals("Pembayaran Di Tolak")){
+                                txtPenjelasan.setVisibility(View.VISIBLE);
+                                txtPenjelasan.setText("Maaf, Pesanan Anda Di Tolak. Silahkan Hubungi Mitra Untuk Melakukan Konfirmasi Pesanan Anda !");
+
+                                txtPenjelasanMitra.setVisibility(View.GONE);
+                                btnTerima.setVisibility(View.GONE);
+                                btnTolak.setVisibility(View.GONE);
+                            }
                         }
 
                         keranjangModelList.clear();
@@ -281,6 +386,55 @@ public class TransaksiDetailActivity extends AppCompatActivity {
         };
 
         VolleyAdapter.getInstance().addToRequestQueue(strReq, "volley");
+    }
+
+    private void updateStatus(final String kode, final String status) {
+        final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
+        HttpsTrustManagerAdapter.allowAllSSL();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, new URLAdapter().updateStatusTransaksi(),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e(TAG, "Response: " + response.toString());
+
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            success = jObj.getInt(TAG_SUCCESS);
+
+                            if (success == 1) {
+                                Log.e("v Add", jObj.toString());
+                                Toast.makeText(TransaksiDetailActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(TransaksiDetailActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        loading.dismiss();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loading.dismiss();
+
+                        Toast.makeText(TransaksiDetailActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Log.e(TAG, error.getMessage().toString());
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("kode", kode);
+                params.put("status", status);
+
+                Log.e(TAG, "" + params);
+                return params;
+            }
+        };
+
+        VolleyAdapter.getInstance().addToRequestQueue(stringRequest, "volley");
     }
 
     private void showSettingsDialog() {

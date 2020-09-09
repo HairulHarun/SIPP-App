@@ -43,6 +43,9 @@ public class URLAdapter {
     public String uploadBukti(){
         return URL = URL+"ws-upload-bukti-bayar.php";
     }
+    public String updateStatusTransaksi(){
+        return URL = URL+"ws-update-status-transaksi.php";
+    }
 
     public String getPhotoLapak(){
         return URL = URL_PHOTO+"lapak-photo/";

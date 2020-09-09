@@ -170,6 +170,48 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtTransaksiDetailPenjelasanMitra"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:text="Jika Bukti Pembayaran Yang di Upload Sesuai dengan Jumlah bayar Silahkan Tekan Tombol Terima, Jika Tidak Tolak"
+                    android:textColor="@color/colorAccent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnTransaksiDetailVerifikasi1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorRed"
+                        android:text="Tolak"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorWhite" />
+
+                    <Button
+                        android:id="@+id/btnTransaksiDetailVerifikasi2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:text="Terima"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorWhite" />
+            </LinearLayout>
+
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/txtTransaksiDetailBukti"
                 android:layout_width="match_parent"
