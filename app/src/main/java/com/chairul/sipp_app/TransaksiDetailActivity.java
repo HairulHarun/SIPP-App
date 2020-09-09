@@ -60,7 +60,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
     private static final String TAG_TRANSAKSI = "transaksi";
 
     private ScrollView scrollView;
-    private TextView txtNamaMitra, txtNoRek, txtStatus, txtTotal, txtPenjelasan, txtPenjelasanMitra, txtKetBukti;
+    private TextView txtNamaMitra, txtNoRek, txtStatus, txtTotal, txtPenjelasan, txtPenjelasanMitra, txtKetBukti, txtPenjelasanKet;
     private Button btnUpload, btnBatal, btnTerima, btnTolak;
     private ImageView imgBukti;
 
@@ -104,6 +104,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
         txtStatus = (TextView) findViewById(R.id.txtTransaksiDetailStatus);
         txtPenjelasan = (TextView) findViewById(R.id.txtTransaksiDetailPenjelasan);
         txtPenjelasanMitra = (TextView) findViewById(R.id.txtTransaksiDetailPenjelasanMitra);
+        txtPenjelasanKet = (TextView) findViewById(R.id.txtTransaksiDetailKet);
         txtKetBukti = (TextView) findViewById(R.id.txtTransaksiDetailBukti);
         btnUpload = (Button) findViewById(R.id.btnTransaksiDetailUpload);
         btnBatal = (Button) findViewById(R.id.btnTransaksiDetailBatalkan);
@@ -200,9 +201,16 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                         scrollView.setVisibility(View.VISIBLE);
 
                         total = jObj.getInt("total");
-                        nama_mitra = jObj.getString("nama_mitra");
-                        norek_mitra = jObj.getString("norek_mitra");
                         status_transaksi = jObj.getString("status_transaksi");
+
+                        if (sessionAdapter.getStatus().equals("Users")){
+                            nama_mitra = jObj.getString("nama_mitra");
+                            norek_mitra = jObj.getString("norek_mitra");
+                        }else{
+                            nama_mitra = jObj.getString("nama_users");
+                            norek_mitra = jObj.getString("hp_users");
+                            txtPenjelasanKet.setText("No Hp Users");
+                        }
 
                         txtTotal.setText("Rp. "+String.valueOf(total));
                         txtNamaMitra.setText(nama_mitra);
