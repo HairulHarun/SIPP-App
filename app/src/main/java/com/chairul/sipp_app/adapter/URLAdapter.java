@@ -4,8 +4,8 @@ public class URLAdapter {
     /*private String URL = "http://192.168.43.177/sim-portalevent/webservices/";
     private String URL_PHOTO = "http://192.168.43.177/sim-portalevent/assets/images/photo/";*/
 
-    private String URL = "http://10.3.22.252/sim-portalevent/webservices/";
-    private String URL_PHOTO = "http://10.3.22.252/sim-portalevent/assets/images/photo/";
+    private String URL = "https://si-peperta.000webhostapp.com/webservices/";
+    private String URL_PHOTO = "https://si-peperta.000webhostapp.com/assets/images/photo/";
 
     public String register(){
         return URL = URL+"ws-register.php";
