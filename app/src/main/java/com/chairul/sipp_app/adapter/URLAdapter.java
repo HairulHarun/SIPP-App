@@ -25,8 +25,14 @@ public class URLAdapter {
     public String getTransaksiUsersDetail(){
         return URL = URL+"ws-get-transaksi-users-detail.php";
     }
+    public String getKategori(){
+        return URL = URL+"ws-get-kategori.php";
+    }
     public String getLapakRandom(){
         return URL = URL+"ws-get-lapak-random.php";
+    }
+    public String getLapakKategori(){
+        return URL = URL+"ws-get-lapak-kategori.php";
     }
     public String getLapakPhoto(){
         return URL = URL+"ws-get-lapak-photo.php";
@@ -49,6 +55,9 @@ public class URLAdapter {
 
     public String getPhotoLapak(){
         return URL = URL_PHOTO+"lapak-photo/";
+    }
+    public String getPhotoKategori(){
+        return URL = URL_PHOTO+"kategori/";
     }
     public String getPhotoBuktiPembayaran(){
         return URL = URL_PHOTO+"bukti/";

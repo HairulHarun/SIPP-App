@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">si-PEPERTA</string>
+    <string name="app_name">EVENT-Planner</string>
     <string name="versi">
-        si-PEPERTA Version 1.0 2020
+        Event-Planner Version 1.0 2020
     </string>
     <string name="copyright">
-        Copyright @Aplikasi si-PEPERTA 2020
+        Copyright @Aplikasi Event-Planner 2020
     </string>
     <string name="about">
-        si-PEPERTA Merupakan Sebuah Aplikasi Berbasis Android untuk memudahkan peminjaman perlengkapan pesta di Kota Gorontalo
+        Event-Planner Merupakan Sebuah Aplikasi Berbasis Android untuk memudahkan peminjaman perlengkapan pesta di Kota Gorontalo
     </string>
 
     <string-array name="spinner_status">

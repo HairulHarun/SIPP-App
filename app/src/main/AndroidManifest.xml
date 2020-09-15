@@ -15,8 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".UploadBuktiActivity"/>
+        <activity android:name=".LapakKategoriActivity"></activity>
+        <activity android:name=".BerandaActivity" />
+        <activity android:name=".UploadBuktiActivity" />
         <activity android:name=".TransaksiDetailActivity" />
         <activity android:name=".TransaksiActivity" />
         <activity android:name=".MitraActivity" />
@@ -30,12 +31,19 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".RegisterActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
-        <activity android:name=".LoginActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".SplashActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

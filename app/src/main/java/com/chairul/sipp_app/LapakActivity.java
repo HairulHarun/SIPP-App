@@ -122,13 +122,17 @@ public class LapakActivity extends AppCompatActivity {
 
         getImage(ID);
 
-        btnKeranjang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogKeranjang();
-            }
-        });
-
+        if (sessionAdapter.isLoggedIn()){
+            btnKeranjang.setVisibility(View.VISIBLE);
+            btnKeranjang.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showDialogKeranjang();
+                }
+            });
+        }else{
+            btnKeranjang.setVisibility(View.GONE);
+        }
     }
 
     @Override
