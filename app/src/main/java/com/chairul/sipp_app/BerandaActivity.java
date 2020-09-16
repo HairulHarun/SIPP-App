@@ -146,8 +146,20 @@ public class BerandaActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_login) {
-            startActivity(new Intent(BerandaActivity.this, LoginActivity.class));
+        if (sessionAdapter.isLoggedIn()){
+            if (id == R.id.action_keranjang) {
+                startActivity(new Intent(BerandaActivity.this, KeranjangActivity.class));
+            }else if (id == R.id.action_transaksi) {
+                startActivity(new Intent(BerandaActivity.this, TransaksiActivity.class));
+            }else if (id == R.id.action_profile) {
+                startActivity(new Intent(BerandaActivity.this, ProfileActivity.class));
+            }else if (id == R.id.action_about) {
+                startActivity(new Intent(BerandaActivity.this, AboutActivity.class));
+            }
+        }else{
+            if (id == R.id.action_login) {
+                startActivity(new Intent(BerandaActivity.this, LoginActivity.class));
+            }
         }
 
         return super.onOptionsItemSelected(item);

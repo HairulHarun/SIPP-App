@@ -93,15 +93,31 @@ public class LapakKategoriActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_beranda, menu);
+        if (sessionAdapter.isLoggedIn()){
+            getMenuInflater().inflate(R.menu.menu_1, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.menu_beranda, menu);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_login) {
-            startActivity(new Intent(LapakKategoriActivity.this, LoginActivity.class));
+        if (sessionAdapter.isLoggedIn()){
+            if (id == R.id.action_keranjang) {
+                startActivity(new Intent(LapakKategoriActivity.this, KeranjangActivity.class));
+            }else if (id == R.id.action_transaksi) {
+                startActivity(new Intent(LapakKategoriActivity.this, TransaksiActivity.class));
+            }else if (id == R.id.action_profile) {
+                startActivity(new Intent(LapakKategoriActivity.this, ProfileActivity.class));
+            }else if (id == R.id.action_about) {
+                startActivity(new Intent(LapakKategoriActivity.this, AboutActivity.class));
+            }
+        }else{
+            if (id == R.id.action_login) {
+                startActivity(new Intent(LapakKategoriActivity.this, LoginActivity.class));
+            }
         }
 
         return super.onOptionsItemSelected(item);
