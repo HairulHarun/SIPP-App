@@ -450,7 +450,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                                 Log.e("v Add", jObj.toString());
                                 Toast.makeText(TransaksiDetailActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
 
-                                startActivity(new Intent(TransaksiDetailActivity.this, MainActivity.class));
+                                startActivity(new Intent(TransaksiDetailActivity.this, BerandaActivity.class));
                             } else {
                                 Toast.makeText(TransaksiDetailActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
                             }

@@ -299,7 +299,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onBackPressed(){
         if (doubleBackToExitPressedOnce) {
-            startActivity(new Intent(LoginActivity.this, BerandaActivity.class));
+            moveTaskToBack(true);
             return;
         }
 
