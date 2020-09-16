@@ -313,7 +313,7 @@ public class KeranjangActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        startActivity(new Intent(KeranjangActivity.this, MainActivity.class));
+        startActivity(new Intent(KeranjangActivity.this, BerandaActivity.class));
     }
 
     private void showSettingsDialog() {

@@ -14,10 +14,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -69,7 +74,13 @@ public class BerandaActivity extends AppCompatActivity {
     private SessionAdapter sessionAdapter;
     private Boolean isInternetPresent = false;
 
+    private LinearLayout layoutMenu;
+    private TextView txtMenuKeranjang, txtMenuTransaksi;
+    private ImageView imgMenu;
+
     private SliderLayout sliderLayout;
+
+    private boolean doubleBackToExitPressedOnce = false;
 
     String tag_json_obj = "json_obj_req";
     int success;
@@ -81,6 +92,11 @@ public class BerandaActivity extends AppCompatActivity {
 
         sliderLayout = findViewById(R.id.slider);
 
+        layoutMenu = (LinearLayout) findViewById(R.id.layoutMenu);
+        txtMenuKeranjang = (TextView) findViewById(R.id.txtMenuKeranjang);
+        txtMenuTransaksi = (TextView) findViewById(R.id.txtMenuTransaksi);
+        imgMenu = (ImageView) findViewById(R.id.imgMenu);
+
         ViewPager viewPager = (ViewPager)findViewById(R.id.view_pager);
         setupViewPager(viewPager);
 
@@ -90,12 +106,40 @@ public class BerandaActivity extends AppCompatActivity {
         sessionAdapter = new SessionAdapter(getApplicationContext());
         koneksiAdapter = new KoneksiAdapter(getApplicationContext());
 
+        if (sessionAdapter.isLoggedIn()){
+            layoutMenu.setVisibility(View.VISIBLE);
+            txtMenuKeranjang.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(BerandaActivity.this, KeranjangActivity.class));
+                }
+            });
+            txtMenuTransaksi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(BerandaActivity.this, TransaksiActivity.class));
+                }
+            });
+            imgMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(BerandaActivity.this, ProfileActivity.class));
+                }
+            });
+        }else {
+            layoutMenu.setVisibility(View.GONE);
+        }
+
         initRV();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_beranda, menu);
+        if (sessionAdapter.isLoggedIn()){
+            getMenuInflater().inflate(R.menu.menu_1, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.menu_beranda, menu);
+        }
         return true;
     }
 
@@ -107,6 +151,23 @@ public class BerandaActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onBackPressed(){
+        if (doubleBackToExitPressedOnce) {
+            moveTaskToBack(true);
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Klik lagi untuk keluar !", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
     private void initRV(){

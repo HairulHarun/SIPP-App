@@ -17,6 +17,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:id="@+id/layoutMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/txtMenuKeranjang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Keranjang"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/txtMenuTransaksi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Transaksi"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+
+            <ImageView
+                android:id="@+id/imgMenu"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_users" />
+        </LinearLayout>
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"

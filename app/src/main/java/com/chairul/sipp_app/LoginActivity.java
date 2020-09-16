@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (status.equals("Mitra")){
                             startActivity(new Intent(LoginActivity.this, MitraActivity.class));
                         }else{
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, BerandaActivity.class));
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "Json Error: " + jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
@@ -299,7 +299,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onBackPressed(){
         if (doubleBackToExitPressedOnce) {
-            moveTaskToBack(true);
+            startActivity(new Intent(LoginActivity.this, BerandaActivity.class));
             return;
         }
 

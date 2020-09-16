@@ -87,7 +87,7 @@ public class TransaksiActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        startActivity(new Intent(TransaksiActivity.this, MainActivity.class));
+        startActivity(new Intent(TransaksiActivity.this, BerandaActivity.class));
     }
 
     private void initRV(){
