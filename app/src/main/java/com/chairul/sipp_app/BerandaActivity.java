@@ -106,6 +106,8 @@ public class BerandaActivity extends AppCompatActivity {
         sessionAdapter = new SessionAdapter(getApplicationContext());
         koneksiAdapter = new KoneksiAdapter(getApplicationContext());
 
+        sessionAdapter.checkLogin();
+
         if (sessionAdapter.isLoggedIn()){
             layoutMenu.setVisibility(View.VISIBLE);
             txtMenuKeranjang.setOnClickListener(new View.OnClickListener() {

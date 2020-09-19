@@ -69,7 +69,7 @@ public class LapakActivity extends AppCompatActivity {
     private String ID, ID_MITRA, ID_KATEGORI, NAMA, DETAIL, STOK, HARGA, STATUS, NAMA_MITRA, NAMA_KATEGORI;
 
     private TextView txtMitra, txtKategori, txtNama, txtDetail, txtHarga, txtStok, txtStatus;
-    private Button btnKeranjang;
+    private Button btnKeranjang, btnEditPhoto;
 
     private SliderLayout sliderLayout;
 
@@ -110,6 +110,7 @@ public class LapakActivity extends AppCompatActivity {
         txtHarga = (TextView) findViewById(R.id.txt_harga_lapak);
         txtStatus = (TextView) findViewById(R.id.txt_status_lapak);
         btnKeranjang = (Button) findViewById(R.id.btnKeranjang);
+        btnEditPhoto = (Button) findViewById(R.id.btnEditPhoto);
 
         sliderLayout = findViewById(R.id.slider);
 
@@ -123,15 +124,40 @@ public class LapakActivity extends AppCompatActivity {
         getImage(ID);
 
         if (sessionAdapter.isLoggedIn()){
-            btnKeranjang.setVisibility(View.VISIBLE);
-            btnKeranjang.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showDialogKeranjang();
-                }
-            });
+            if (sessionAdapter.getStatus().equals("Mitra")){
+                btnKeranjang.setVisibility(View.GONE);
+                btnEditPhoto.setVisibility(View.VISIBLE);
+                btnEditPhoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(LapakActivity.this, EditPhotoLapakActivity.class);
+                        intent.putExtra("id", ID);
+                        intent.putExtra("id_mitra", ID_MITRA);
+                        intent.putExtra("id_kategori", ID_KATEGORI);
+                        intent.putExtra("nama", NAMA);
+                        intent.putExtra("detail", DETAIL);
+                        intent.putExtra("stok", STOK);
+                        intent.putExtra("harga", HARGA);
+                        intent.putExtra("status", STATUS);
+                        intent.putExtra("nama_mitra", NAMA_MITRA);
+                        intent.putExtra("nama_kategori", NAMA_KATEGORI);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                });
+            }else{
+                btnKeranjang.setVisibility(View.VISIBLE);
+                btnEditPhoto.setVisibility(View.GONE);
+                btnKeranjang.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showDialogKeranjang();
+                    }
+                });
+            }
         }else{
             btnKeranjang.setVisibility(View.GONE);
+            btnEditPhoto.setVisibility(View.GONE);
         }
     }
 

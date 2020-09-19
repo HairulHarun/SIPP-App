@@ -1,12 +1,11 @@
 package com.chairul.sipp_app;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,7 +14,6 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,12 +22,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.chairul.sipp_app.adapter.HttpsTrustManagerAdapter;
 import com.chairul.sipp_app.adapter.KoneksiAdapter;
-import com.chairul.sipp_app.adapter.RVLapakAdapter;
-import com.chairul.sipp_app.adapter.RVLapakAdapterHorizontal;
+import com.chairul.sipp_app.adapter.RVKategoriAdapter;
+import com.chairul.sipp_app.adapter.RVLapakPhotoAdapter;
 import com.chairul.sipp_app.adapter.SessionAdapter;
 import com.chairul.sipp_app.adapter.URLAdapter;
 import com.chairul.sipp_app.adapter.VolleyAdapter;
-import com.chairul.sipp_app.model.LapakModel;
+import com.chairul.sipp_app.model.KategoriModel;
+import com.chairul.sipp_app.model.LapakPhotoModel;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -49,13 +48,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import in.myinnos.imagesliderwithswipeslibrary.SliderLayout;
-
-public class LapakKategoriActivity extends AppCompatActivity {
+public class EditPhotoLapakActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String TAG_SUCCESS = "sukses";
-    private static final String TAG_LAPAK = "lapak";
-    private static final String TAG_LAPAK_PHOTO = "lapak_photo";
+    private static final String TAG_KATEGORI = "kategori";
 
     private KoneksiAdapter koneksiAdapter;
     private SessionAdapter sessionAdapter;
@@ -63,70 +59,75 @@ public class LapakKategoriActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter adapter;
-    private List<LapakModel> lapakModelList2;
+    private List<LapakPhotoModel> lapakPhotoModelList;
+
+    private Intent intent;
+    private String ID, ID_MITRA, ID_KATEGORI, NAMA, DETAIL, STOK, HARGA, STATUS, NAMA_MITRA, NAMA_KATEGORI;
 
     int success;
-
-    Intent intent;
-    String ID_KATEGORI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lapak_kategori);
+        setContentView(R.layout.activity_edit_photo_lapak);
+
+        intent = getIntent();
+        ID = intent.getStringExtra("id");
+        ID_MITRA = intent.getStringExtra("id_mitra");
+        ID_KATEGORI = intent.getStringExtra("id_kategori");
+        NAMA = intent.getStringExtra("nama");
+        DETAIL = intent.getStringExtra("detail");
+        STOK = intent.getStringExtra("stok");
+        HARGA = intent.getStringExtra("harga");
+        STATUS = intent.getStringExtra("status");
+        NAMA_MITRA = intent.getStringExtra("nama_mitra");
+        NAMA_KATEGORI = intent.getStringExtra("nama_kategori");
 
         sessionAdapter = new SessionAdapter(getApplicationContext());
         koneksiAdapter = new KoneksiAdapter(getApplicationContext());
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.rvOutlet);
-        lapakModelList2 = new ArrayList<>();
-
-        intent = getIntent();
-        ID_KATEGORI = intent.getStringExtra("id_kategori");
+        mRecyclerView = (RecyclerView) findViewById(R.id.rvOutlet);
+        lapakPhotoModelList = new ArrayList<>();
 
         initRV();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (sessionAdapter.isLoggedIn()){
-            getMenuInflater().inflate(R.menu.menu_1, menu);
-        }else{
-            getMenuInflater().inflate(R.menu.menu_beranda, menu);
-        }
+        getMenuInflater().inflate(R.menu.menu_2, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (sessionAdapter.isLoggedIn()){
-            if (id == R.id.action_keranjang) {
-                startActivity(new Intent(LapakKategoriActivity.this, KeranjangActivity.class));
-            }else if (id == R.id.action_transaksi) {
-                startActivity(new Intent(LapakKategoriActivity.this, TransaksiActivity.class));
-            }else if (id == R.id.action_profile) {
-                startActivity(new Intent(LapakKategoriActivity.this, ProfileActivity.class));
-            }else if (id == R.id.action_about) {
-                startActivity(new Intent(LapakKategoriActivity.this, AboutActivity.class));
-            }
-        }else{
-            if (id == R.id.action_login) {
-                startActivity(new Intent(LapakKategoriActivity.this, LoginActivity.class));
-            }
+        if (id == R.id.action_tambah_foto) {
+            Intent intent = new Intent(EditPhotoLapakActivity.this, TambahLapakPhotoActivity.class);
+            intent.putExtra("id", ID);
+            intent.putExtra("id_mitra", ID_MITRA);
+            intent.putExtra("id_kategori", ID_KATEGORI);
+            intent.putExtra("nama", NAMA);
+            intent.putExtra("detail", DETAIL);
+            intent.putExtra("stok", STOK);
+            intent.putExtra("harga", HARGA);
+            intent.putExtra("status", STATUS);
+            intent.putExtra("nama_mitra", NAMA_MITRA);
+            intent.putExtra("nama_kategori", NAMA_KATEGORI);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     private void initRV(){
-        adapter = new RVLapakAdapter(getApplicationContext(), lapakModelList2);
-        mLayoutManager = new LinearLayoutManager(this);
+        adapter = new RVLapakPhotoAdapter(getApplicationContext(), lapakPhotoModelList);
+        mLayoutManager = new GridLayoutManager(EditPhotoLapakActivity.this, 3);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
 
-        Dexter.withActivity(this)
+        Dexter.withActivity(EditPhotoLapakActivity.this)
                 .withPermissions(
                         android.Manifest.permission.INTERNET,
                         Manifest.permission.ACCESS_NETWORK_STATE)
@@ -136,10 +137,10 @@ public class LapakKategoriActivity extends AppCompatActivity {
                         // check if all permissions are granted
                         if (report.areAllPermissionsGranted()) {
                             if (isInternetPresent = koneksiAdapter.isConnectingToInternet()) {
-                                getDataLapak();
+                                getData("");
                             }else{
                                 SnackbarManager.show(
-                                        com.nispok.snackbar.Snackbar.with(LapakKategoriActivity.this)
+                                        com.nispok.snackbar.Snackbar.with(EditPhotoLapakActivity.this)
                                                 .text("No Connection !")
                                                 .duration(com.nispok.snackbar.Snackbar.SnackbarDuration.LENGTH_INDEFINITE)
                                                 .actionLabel("Refresh")
@@ -149,7 +150,7 @@ public class LapakKategoriActivity extends AppCompatActivity {
                                                         refresh();
                                                     }
                                                 })
-                                        , LapakKategoriActivity.this);
+                                        , EditPhotoLapakActivity.this);
                             }
 
                         }
@@ -176,89 +177,65 @@ public class LapakKategoriActivity extends AppCompatActivity {
                 .check();
     }
 
-    private void getDataLapak() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
-
+    private void getData(final String id) {
         HttpsTrustManagerAdapter.allowAllSSL();
-        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getLapakKategori(), new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getLapakPhoto(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.e(TAG, "Data Response: " + response);
                 try {
-                    JSONObject jObj = new JSONObject(response.toString());
+                    JSONObject jObj = new JSONObject(response);
                     success = jObj.getInt(TAG_SUCCESS);
                     if (success == 1) {
 
-                        lapakModelList2.clear();
+                        lapakPhotoModelList.clear();
+                        JSONArray jsonArray = jObj.getJSONArray(TAG_KATEGORI);
 
-                        JSONArray pekerjaan = jObj.getJSONArray(TAG_LAPAK);
-
-                        for (int i = 0; i < pekerjaan.length(); i++) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
                             try {
-                                JSONObject jsonObject = pekerjaan.getJSONObject(i);
+                                JSONObject obj = jsonArray.getJSONObject(i);
 
-                                LapakModel lapakModel = new LapakModel();
-                                lapakModel.setIdLapak(jsonObject.getString("id_lapak"));
-                                lapakModel.setIdMitra(jsonObject.getString("id_mitra"));
-                                lapakModel.setIdKategori(jsonObject.getString("id_kategori"));
-                                lapakModel.setNama(jsonObject.getString("nama_lapak"));
-                                lapakModel.setDetail(jsonObject.getString("detail_lapak"));
-                                lapakModel.setStok(jsonObject.getString("stok_lapak"));
-                                lapakModel.setHarga(jsonObject.getString("harga_lapak"));
-                                lapakModel.setStatus(jsonObject.getString("status_lapak"));
-                                lapakModel.setNamaMitra(jsonObject.getString("nama_mitra"));
-                                lapakModel.setNamaKategori(jsonObject.getString("nama_kategori"));
+                                LapakPhotoModel lapakPhotoModel = new LapakPhotoModel();
+                                lapakPhotoModel.setId(obj.getString("id_lapak_photo"));
+                                lapakPhotoModel.setUrl(obj.getString("url_lapak_photo"));
 
-                                JSONArray jsonArray2 = jsonObject.getJSONArray(TAG_LAPAK_PHOTO);
-                                String lapak_photo = "noimage.png";
-                                if (jsonArray2.length() > 0){
-                                    JSONObject obj2 = jsonArray2.getJSONObject(0);
-                                    lapak_photo = obj2.getString("url_lapak_photo");
-                                }
-
-                                lapakModel.setPhoto(lapak_photo);
-
-                                lapakModelList2.add(lapakModel);
-
+                                lapakPhotoModelList.add(lapakPhotoModel);
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                progressDialog.dismiss();
                             }
                         }
                         adapter.notifyDataSetChanged();
-                        progressDialog.dismiss();
                     } else {
-                        Toast.makeText(getApplicationContext(), jObj.getString(TAG_LAPAK), Toast.LENGTH_LONG).show();
-                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(),jObj.getString(TAG_KATEGORI), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
+                    // JSON error
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Volley", error.toString());
-                progressDialog.dismiss();
+                Log.e(TAG, "Get Data Errorrrr: " + error.getMessage());
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id_kategori", ID_KATEGORI);
+                params.put("id", id);
 
                 return params;
             }
 
         };
 
+        // Adding request to request queue
         VolleyAdapter.getInstance().addToRequestQueue(strReq, "volley");
     }
 
     private void showSettingsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditPhotoLapakActivity.this);
         builder.setTitle("Need Permissions");
         builder.setMessage("This app needs permission to use this feature. You can grant them in app settings.");
         builder.setPositiveButton("GOTO SETTINGS", new DialogInterface.OnClickListener() {

@@ -42,6 +42,15 @@
                 android:text="Masukan Keranjang"
                 android:textColor="@color/colorWhite" />
 
+            <Button
+                android:id="@+id/btnEditPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimary"
+                android:text="Edit Photo"
+                android:textColor="@color/colorWhite" />
+
             <TextView
                 android:id="@+id/txt_nama_lapak"
                 android:layout_width="match_parent"

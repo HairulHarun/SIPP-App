@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_lapak"
+        android:icon="@drawable/ic_lapak"
+        app:showAsAction="always"
+        android:title="Lapak" />
+
+    <item
+        android:id="@+id/action_tambah"
+        android:icon="@drawable/ic_tambah"
+        app:showAsAction="always"
+        android:title="Tambah Data" />
+
+</menu>

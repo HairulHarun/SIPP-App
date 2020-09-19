@@ -34,17 +34,30 @@ public class URLAdapter {
     public String getLapakKategori(){
         return URL = URL+"ws-get-lapak-kategori.php";
     }
+    public String getLapakMitra(){
+        return URL = URL+"ws-get-lapak-mitra.php";
+    }
     public String getLapakPhoto(){
         return URL = URL+"ws-get-lapak-photo.php";
     }
+
     public String simpanKeranjang(){
         return URL = URL+"ws-simpan-keranjang.php";
     }
     public String simpanTransaksi(){
         return URL = URL+"ws-simpan-transaksi.php";
     }
+    public String simpanLapak(){
+        return URL = URL+"ws-tambah-lapak.php";
+    }
+    public String simpanLapakPhoto(){
+        return URL = URL+"ws-tambah-lapak-photo.php";
+    }
     public String hapusKeranjang(){
         return URL = URL+"ws-hapus-keranjang.php";
+    }
+    public String hapusLapakPhoto(){
+        return URL = URL+"ws-hapus-lapak-photo.php";
     }
     public String uploadBukti(){
         return URL = URL+"ws-upload-bukti-bayar.php";

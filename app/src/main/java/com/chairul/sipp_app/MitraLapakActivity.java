@@ -13,9 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,7 +22,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.chairul.sipp_app.adapter.HttpsTrustManagerAdapter;
 import com.chairul.sipp_app.adapter.KoneksiAdapter;
 import com.chairul.sipp_app.adapter.RVLapakAdapter;
-import com.chairul.sipp_app.adapter.RVLapakAdapterHorizontal;
 import com.chairul.sipp_app.adapter.SessionAdapter;
 import com.chairul.sipp_app.adapter.URLAdapter;
 import com.chairul.sipp_app.adapter.VolleyAdapter;
@@ -51,7 +47,7 @@ import java.util.Map;
 
 import in.myinnos.imagesliderwithswipeslibrary.SliderLayout;
 
-public class LapakKategoriActivity extends AppCompatActivity {
+public class MitraLapakActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String TAG_SUCCESS = "sukses";
     private static final String TAG_LAPAK = "lapak";
@@ -67,13 +63,12 @@ public class LapakKategoriActivity extends AppCompatActivity {
 
     int success;
 
-    Intent intent;
-    String ID_KATEGORI;
+    String ID_MITRA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lapak_kategori);
+        setContentView(R.layout.activity_mitra_lapak);
 
         sessionAdapter = new SessionAdapter(getApplicationContext());
         koneksiAdapter = new KoneksiAdapter(getApplicationContext());
@@ -81,42 +76,9 @@ public class LapakKategoriActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView)findViewById(R.id.rvOutlet);
         lapakModelList2 = new ArrayList<>();
 
-        intent = getIntent();
-        ID_KATEGORI = intent.getStringExtra("id_kategori");
+        ID_MITRA = sessionAdapter.getId();
 
         initRV();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (sessionAdapter.isLoggedIn()){
-            getMenuInflater().inflate(R.menu.menu_1, menu);
-        }else{
-            getMenuInflater().inflate(R.menu.menu_beranda, menu);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (sessionAdapter.isLoggedIn()){
-            if (id == R.id.action_keranjang) {
-                startActivity(new Intent(LapakKategoriActivity.this, KeranjangActivity.class));
-            }else if (id == R.id.action_transaksi) {
-                startActivity(new Intent(LapakKategoriActivity.this, TransaksiActivity.class));
-            }else if (id == R.id.action_profile) {
-                startActivity(new Intent(LapakKategoriActivity.this, ProfileActivity.class));
-            }else if (id == R.id.action_about) {
-                startActivity(new Intent(LapakKategoriActivity.this, AboutActivity.class));
-            }
-        }else{
-            if (id == R.id.action_login) {
-                startActivity(new Intent(LapakKategoriActivity.this, LoginActivity.class));
-            }
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void initRV(){
@@ -139,7 +101,7 @@ public class LapakKategoriActivity extends AppCompatActivity {
                                 getDataLapak();
                             }else{
                                 SnackbarManager.show(
-                                        com.nispok.snackbar.Snackbar.with(LapakKategoriActivity.this)
+                                        com.nispok.snackbar.Snackbar.with(MitraLapakActivity.this)
                                                 .text("No Connection !")
                                                 .duration(com.nispok.snackbar.Snackbar.SnackbarDuration.LENGTH_INDEFINITE)
                                                 .actionLabel("Refresh")
@@ -149,7 +111,7 @@ public class LapakKategoriActivity extends AppCompatActivity {
                                                         refresh();
                                                     }
                                                 })
-                                        , LapakKategoriActivity.this);
+                                        , MitraLapakActivity.this);
                             }
 
                         }
@@ -182,7 +144,7 @@ public class LapakKategoriActivity extends AppCompatActivity {
         progressDialog.show();
 
         HttpsTrustManagerAdapter.allowAllSSL();
-        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getLapakKategori(), new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getLapakMitra(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -247,7 +209,7 @@ public class LapakKategoriActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id_kategori", ID_KATEGORI);
+                params.put("id_mitra", ID_MITRA);
 
                 return params;
             }

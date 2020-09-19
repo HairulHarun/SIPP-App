@@ -15,7 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LapakKategoriActivity"></activity>
+        <activity android:name=".TambahLapakPhotoActivity"></activity>
+        <activity android:name=".EditPhotoLapakActivity" />
+        <activity android:name=".MitraLapakActivity" />
+        <activity android:name=".TambahLapakActivity" />
+        <activity android:name=".LapakKategoriActivity" />
         <activity android:name=".BerandaActivity" />
         <activity android:name=".UploadBuktiActivity" />
         <activity android:name=".TransaksiDetailActivity" />
