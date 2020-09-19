@@ -1,9 +1,11 @@
 package com.chairul.sipp_app.adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -39,15 +42,17 @@ import java.util.Map;
 import java.util.Random;
 
 public class RVLapakPhotoAdapter extends RecyclerView.Adapter<RVLapakPhotoAdapter.ViewHolder> {
+    private Activity activity;
     private Context context;
     private List<LapakPhotoModel> list;
 
     private int lastPosition = -1;
 
-    public RVLapakPhotoAdapter(Context context, List<LapakPhotoModel> list){
+    public RVLapakPhotoAdapter(Activity activity, Context context, List<LapakPhotoModel> list){
         super();
 
         this.list = list;
+        this.activity = activity;
         this.context = context;
     }
 
@@ -56,6 +61,17 @@ public class RVLapakPhotoAdapter extends RecyclerView.Adapter<RVLapakPhotoAdapte
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_lapak_photo, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
+    }
+
+    public void updateData(List<LapakPhotoModel> viewModels) {
+        list.clear();
+        list.addAll(viewModels);
+        notifyDataSetChanged();
+    }
+
+    public void addItem(int position, LapakPhotoModel viewModel) {
+        list.add(position, viewModel);
+        notifyItemInserted(position);
     }
 
     public void removeItem(int position) {
@@ -78,23 +94,7 @@ public class RVLapakPhotoAdapter extends RecyclerView.Adapter<RVLapakPhotoAdapte
         holder.txtCardHapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Hapus Data");
-                builder.setMessage("Apakah anda yakin hapus data ini ?");
-                builder.setPositiveButton("HAPUS", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        hapusData(lapakPhotoModel.getId().toString(), position);
-                        dialog.cancel();
-                    }
-                });
-                builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                builder.show();
+                showDialog(lapakPhotoModel.getId().toString(), position);
             }
         });
     }
@@ -106,6 +106,25 @@ public class RVLapakPhotoAdapter extends RecyclerView.Adapter<RVLapakPhotoAdapte
             viewToAnimate.startAnimation(anim);
         }
 
+    }
+
+    private void showDialog(final String id_lapak_photo, final int position) throws Resources.NotFoundException {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Hapus Data");
+        builder.setMessage("Apakah anda ingin menghapus data ini ?");
+        builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                hapusData(id_lapak_photo, position);
+            }
+        });
+        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
     @Override

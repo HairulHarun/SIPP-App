@@ -159,6 +159,22 @@ public class TambahLapakPhotoActivity extends AppCompatActivity {
         VolleyAdapter.getInstance().addToRequestQueue(stringRequest, tag_json_obj);
     }
 
+    public void onBackPressed(){
+        Intent intent = new Intent(TambahLapakPhotoActivity.this, EditPhotoLapakActivity.class);
+        intent.putExtra("id", ID);
+        intent.putExtra("id_mitra", ID_MITRA);
+        intent.putExtra("id_kategori", ID_KATEGORI);
+        intent.putExtra("nama", NAMA);
+        intent.putExtra("detail", DETAIL);
+        intent.putExtra("stok", STOK);
+        intent.putExtra("harga", HARGA);
+        intent.putExtra("status", STATUS);
+        intent.putExtra("nama_mitra", NAMA_MITRA);
+        intent.putExtra("nama_kategori", NAMA_KATEGORI);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");

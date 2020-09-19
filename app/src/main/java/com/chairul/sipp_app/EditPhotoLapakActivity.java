@@ -120,8 +120,24 @@ public class EditPhotoLapakActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onBackPressed(){
+        Intent intent = new Intent(EditPhotoLapakActivity.this, LapakActivity.class);
+        intent.putExtra("id", ID);
+        intent.putExtra("id_mitra", ID_MITRA);
+        intent.putExtra("id_kategori", ID_KATEGORI);
+        intent.putExtra("nama", NAMA);
+        intent.putExtra("detail", DETAIL);
+        intent.putExtra("stok", STOK);
+        intent.putExtra("harga", HARGA);
+        intent.putExtra("status", STATUS);
+        intent.putExtra("nama_mitra", NAMA_MITRA);
+        intent.putExtra("nama_kategori", NAMA_KATEGORI);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     private void initRV(){
-        adapter = new RVLapakPhotoAdapter(getApplicationContext(), lapakPhotoModelList);
+        adapter = new RVLapakPhotoAdapter(EditPhotoLapakActivity.this, getApplicationContext(), lapakPhotoModelList);
         mLayoutManager = new GridLayoutManager(EditPhotoLapakActivity.this, 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
