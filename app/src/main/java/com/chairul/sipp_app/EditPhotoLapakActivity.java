@@ -51,7 +51,7 @@ import java.util.Map;
 public class EditPhotoLapakActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String TAG_SUCCESS = "sukses";
-    private static final String TAG_KATEGORI = "kategori";
+    private static final String TAG_LAPAK_PHOTO = "lapak_photo";
 
     private KoneksiAdapter koneksiAdapter;
     private SessionAdapter sessionAdapter;
@@ -122,7 +122,7 @@ public class EditPhotoLapakActivity extends AppCompatActivity {
 
     private void initRV(){
         adapter = new RVLapakPhotoAdapter(getApplicationContext(), lapakPhotoModelList);
-        mLayoutManager = new GridLayoutManager(EditPhotoLapakActivity.this, 3);
+        mLayoutManager = new GridLayoutManager(EditPhotoLapakActivity.this, 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
@@ -137,7 +137,7 @@ public class EditPhotoLapakActivity extends AppCompatActivity {
                         // check if all permissions are granted
                         if (report.areAllPermissionsGranted()) {
                             if (isInternetPresent = koneksiAdapter.isConnectingToInternet()) {
-                                getData("");
+                                getData(ID);
                             }else{
                                 SnackbarManager.show(
                                         com.nispok.snackbar.Snackbar.with(EditPhotoLapakActivity.this)
@@ -189,7 +189,7 @@ public class EditPhotoLapakActivity extends AppCompatActivity {
                     if (success == 1) {
 
                         lapakPhotoModelList.clear();
-                        JSONArray jsonArray = jObj.getJSONArray(TAG_KATEGORI);
+                        JSONArray jsonArray = jObj.getJSONArray(TAG_LAPAK_PHOTO);
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             try {
@@ -206,7 +206,7 @@ public class EditPhotoLapakActivity extends AppCompatActivity {
                         }
                         adapter.notifyDataSetChanged();
                     } else {
-                        Toast.makeText(getApplicationContext(),jObj.getString(TAG_KATEGORI), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),jObj.getString(TAG_LAPAK_PHOTO), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     // JSON error
@@ -223,7 +223,7 @@ public class EditPhotoLapakActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id", id);
+                params.put("id_lapak", id);
 
                 return params;
             }
