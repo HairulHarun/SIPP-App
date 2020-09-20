@@ -1,4 +1,8 @@
-package com.chairul.sipp_app.fragment;
+package com.chairul.sipp_app;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -8,30 +12,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.chairul.sipp_app.MainActivity;
-import com.chairul.sipp_app.R;
 import com.chairul.sipp_app.adapter.HttpsTrustManagerAdapter;
 import com.chairul.sipp_app.adapter.KoneksiAdapter;
 import com.chairul.sipp_app.adapter.RVKategoriAdapter;
-import com.chairul.sipp_app.adapter.RVLapakAdapterHorizontal;
 import com.chairul.sipp_app.adapter.SessionAdapter;
 import com.chairul.sipp_app.adapter.URLAdapter;
 import com.chairul.sipp_app.adapter.VolleyAdapter;
 import com.chairul.sipp_app.model.KategoriModel;
-import com.chairul.sipp_app.model.LapakModel;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -51,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Tab2Fragment extends Fragment {
+public class MitraLapakKategoriActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String TAG_SUCCESS = "sukses";
     private static final String TAG_KATEGORI = "kategori";
@@ -66,41 +59,28 @@ public class Tab2Fragment extends Fragment {
 
     int success;
 
-    public Tab2Fragment() {
-        // Required empty public constructor
-    }
-
-    public static Tab2Fragment newInstance() {
-        Bundle args = new Bundle();
-
-        Tab2Fragment fragment = new Tab2Fragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState){
-        View root = inflater.inflate(R.layout.fragment_tab2, viewGroup, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_mitra_lapak_kategori);
 
-        sessionAdapter = new SessionAdapter(getActivity().getApplicationContext());
-        koneksiAdapter = new KoneksiAdapter(getActivity().getApplicationContext());
+        sessionAdapter = new SessionAdapter(getApplicationContext());
+        koneksiAdapter = new KoneksiAdapter(getApplicationContext());
 
-        mRecyclerView = (RecyclerView) root.findViewById(R.id.rvOutlet);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rvOutlet);
         kategoriModelList = new ArrayList<>();
 
         initRV();
-
-        return root;
     }
 
     private void initRV(){
-        adapter = new RVKategoriAdapter(getActivity().getApplicationContext(), kategoriModelList);
-        mLayoutManager = new GridLayoutManager(getActivity(), 2);
+        adapter = new RVKategoriAdapter(getApplicationContext(), kategoriModelList);
+        mLayoutManager = new GridLayoutManager(MitraLapakKategoriActivity.this, 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
 
-        Dexter.withActivity(getActivity())
+        Dexter.withActivity(MitraLapakKategoriActivity.this)
                 .withPermissions(
                         android.Manifest.permission.INTERNET,
                         Manifest.permission.ACCESS_NETWORK_STATE)
@@ -113,7 +93,7 @@ public class Tab2Fragment extends Fragment {
                                 getData("");
                             }else{
                                 SnackbarManager.show(
-                                        com.nispok.snackbar.Snackbar.with(getActivity())
+                                        com.nispok.snackbar.Snackbar.with(MitraLapakKategoriActivity.this)
                                                 .text("No Connection !")
                                                 .duration(com.nispok.snackbar.Snackbar.SnackbarDuration.LENGTH_INDEFINITE)
                                                 .actionLabel("Refresh")
@@ -123,7 +103,7 @@ public class Tab2Fragment extends Fragment {
                                                         refresh();
                                                     }
                                                 })
-                                        , getActivity());
+                                        , MitraLapakKategoriActivity.this);
                             }
 
                         }
@@ -143,7 +123,7 @@ public class Tab2Fragment extends Fragment {
                 withErrorListener(new PermissionRequestErrorListener() {
                     @Override
                     public void onError(DexterError error) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Error occurred! ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Error occurred! ", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .onSameThread()
@@ -180,7 +160,7 @@ public class Tab2Fragment extends Fragment {
                         }
                         adapter.notifyDataSetChanged();
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(),jObj.getString(TAG_KATEGORI), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),jObj.getString(TAG_KATEGORI), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     // JSON error
@@ -209,7 +189,7 @@ public class Tab2Fragment extends Fragment {
     }
 
     private void showSettingsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(MitraLapakKategoriActivity.this);
         builder.setTitle("Need Permissions");
         builder.setMessage("This app needs permission to use this feature. You can grant them in app settings.");
         builder.setPositiveButton("GOTO SETTINGS", new DialogInterface.OnClickListener() {
@@ -230,13 +210,13 @@ public class Tab2Fragment extends Fragment {
 
     private void openSettings() {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
         intent.setData(uri);
         startActivityForResult(intent, 101);
     }
 
     private void refresh(){
-        Intent intent = getActivity().getIntent();
+        Intent intent = getIntent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }

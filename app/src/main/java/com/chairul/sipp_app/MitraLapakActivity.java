@@ -62,8 +62,8 @@ public class MitraLapakActivity extends AppCompatActivity {
     private List<LapakModel> lapakModelList2;
 
     int success;
-
-    String ID_MITRA;
+    Intent intent;
+    String ID_MITRA, ID_KATEGORI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +76,8 @@ public class MitraLapakActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView)findViewById(R.id.rvOutlet);
         lapakModelList2 = new ArrayList<>();
 
+        intent = getIntent();
+        ID_KATEGORI = intent.getStringExtra("id_kategori");
         ID_MITRA = sessionAdapter.getId();
 
         initRV();
@@ -144,7 +146,7 @@ public class MitraLapakActivity extends AppCompatActivity {
         progressDialog.show();
 
         HttpsTrustManagerAdapter.allowAllSSL();
-        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getLapakMitra(), new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getLapakKategoriMitra(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -210,6 +212,7 @@ public class MitraLapakActivity extends AppCompatActivity {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id_mitra", ID_MITRA);
+                params.put("id_kategori", ID_KATEGORI);
 
                 return params;
             }

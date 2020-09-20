@@ -167,6 +167,14 @@ public class LapakActivity extends AppCompatActivity {
         super.onStop();
     }
 
+    public void onBackPressed(){
+        if (sessionAdapter.getStatus().equals("Mitra")){
+            startActivity(new Intent(LapakActivity.this, MitraLapakActivity.class));
+        }else{
+            startActivity(new Intent(LapakActivity.this, BerandaActivity.class));
+        }
+    }
+
     private void getImage(final String id) {
         HttpsTrustManagerAdapter.allowAllSSL();
         StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getLapakPhoto(), new Response.Listener<String>() {

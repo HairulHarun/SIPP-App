@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chairul.sipp_app.LapakActivity;
 import com.chairul.sipp_app.LapakKategoriActivity;
+import com.chairul.sipp_app.MitraLapakActivity;
 import com.chairul.sipp_app.R;
 import com.chairul.sipp_app.model.KategoriModel;
 import com.chairul.sipp_app.model.LapakModel;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Random;
 
 public class RVKategoriAdapter extends RecyclerView.Adapter<RVKategoriAdapter.ViewHolder> {
+    private SessionAdapter sessionAdapter;
     private Context context;
     private List<KategoriModel> list;
 
@@ -34,6 +36,7 @@ public class RVKategoriAdapter extends RecyclerView.Adapter<RVKategoriAdapter.Vi
 
         this.list = list;
         this.context = context;
+        sessionAdapter = new SessionAdapter(context);
     }
 
     @Override
@@ -59,10 +62,17 @@ public class RVKategoriAdapter extends RecyclerView.Adapter<RVKategoriAdapter.Vi
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, LapakKategoriActivity.class);
-                intent.putExtra("id_kategori", kategoriModel.getId());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                if (sessionAdapter.getStatus().equals("Mitra")){
+                    Intent intent = new Intent(context, MitraLapakActivity.class);
+                    intent.putExtra("id_kategori", kategoriModel.getId());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(context, LapakKategoriActivity.class);
+                    intent.putExtra("id_kategori", kategoriModel.getId());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
             }
         });
     }

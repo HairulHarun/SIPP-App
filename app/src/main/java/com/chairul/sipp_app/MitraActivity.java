@@ -40,7 +40,7 @@ public class MitraActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_lapak) {
-            startActivity(new Intent(MitraActivity.this, MitraLapakActivity.class));
+            startActivity(new Intent(MitraActivity.this, MitraLapakKategoriActivity.class));
         }else if (id == R.id.action_tambah) {
             startActivity(new Intent(MitraActivity.this, TambahLapakActivity.class));
         }

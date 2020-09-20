@@ -34,6 +34,9 @@ public class URLAdapter {
     public String getLapakKategori(){
         return URL = URL+"ws-get-lapak-kategori.php";
     }
+    public String getLapakKategoriMitra(){
+        return URL = URL+"ws-get-lapak-kategori-mitra.php";
+    }
     public String getLapakMitra(){
         return URL = URL+"ws-get-lapak-mitra.php";
     }
