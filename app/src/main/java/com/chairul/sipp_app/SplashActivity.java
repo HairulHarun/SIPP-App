@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.RelativeLayout;
 
+import com.chairul.sipp_app.adapter.SessionAdapter;
+
 public class SplashActivity extends AppCompatActivity {
     private RelativeLayout relativeLayout;
     private AnimationDrawable animationDrawable;
+    private SessionAdapter sessionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +25,24 @@ public class SplashActivity extends AppCompatActivity {
         animationDrawable.setEnterFadeDuration(5000);
         animationDrawable.setExitFadeDuration(2000);
 
+        sessionAdapter = new SessionAdapter(getApplicationContext());
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 //TODO Auto-generated method stub
-
-                Intent i = new Intent(SplashActivity.this, BerandaActivity.class);
-                startActivity(i);
+                if (sessionAdapter.isLoggedIn()){
+                    if (sessionAdapter.getStatus().equals("Mitra")){
+                        Intent i = new Intent(SplashActivity.this, MitraActivity.class);
+                        startActivity(i);
+                    }else{
+                        Intent i = new Intent(SplashActivity.this, BerandaActivity.class);
+                        startActivity(i);
+                    }
+                }else{
+                    Intent i = new Intent(SplashActivity.this, BerandaActivity.class);
+                    startActivity(i);
+                }
                 //jeda selesai Splashscreen
                 this.finish();
             }

@@ -169,7 +169,7 @@ public class LapakActivity extends AppCompatActivity {
 
     public void onBackPressed(){
         if (sessionAdapter.getStatus().equals("Mitra")){
-            startActivity(new Intent(LapakActivity.this, MitraLapakActivity.class));
+            startActivity(new Intent(LapakActivity.this, MitraLapakKategoriActivity.class));
         }else{
             startActivity(new Intent(LapakActivity.this, BerandaActivity.class));
         }

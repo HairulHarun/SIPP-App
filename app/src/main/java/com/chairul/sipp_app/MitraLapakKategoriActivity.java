@@ -130,6 +130,10 @@ public class MitraLapakKategoriActivity extends AppCompatActivity {
                 .check();
     }
 
+    public void onBackPressed(){
+        startActivity(new Intent(MitraLapakKategoriActivity.this, MitraActivity.class));
+    }
+
     private void getData(final String id) {
         HttpsTrustManagerAdapter.allowAllSSL();
         StringRequest strReq = new StringRequest(Request.Method.POST, new URLAdapter().getKategori(), new Response.Listener<String>() {

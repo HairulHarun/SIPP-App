@@ -90,6 +90,9 @@ public class BerandaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beranda);
 
+        sessionAdapter = new SessionAdapter(getApplicationContext());
+        koneksiAdapter = new KoneksiAdapter(getApplicationContext());
+
         sliderLayout = findViewById(R.id.slider);
 
         layoutMenu = (LinearLayout) findViewById(R.id.layoutMenu);
@@ -102,11 +105,6 @@ public class BerandaActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
-
-        sessionAdapter = new SessionAdapter(getApplicationContext());
-        koneksiAdapter = new KoneksiAdapter(getApplicationContext());
-
-        sessionAdapter.checkLogin();
 
         if (sessionAdapter.isLoggedIn()){
             layoutMenu.setVisibility(View.VISIBLE);

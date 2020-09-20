@@ -121,17 +121,7 @@ public class EditPhotoLapakActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        Intent intent = new Intent(EditPhotoLapakActivity.this, LapakActivity.class);
-        intent.putExtra("id", ID);
-        intent.putExtra("id_mitra", ID_MITRA);
-        intent.putExtra("id_kategori", ID_KATEGORI);
-        intent.putExtra("nama", NAMA);
-        intent.putExtra("detail", DETAIL);
-        intent.putExtra("stok", STOK);
-        intent.putExtra("harga", HARGA);
-        intent.putExtra("status", STATUS);
-        intent.putExtra("nama_mitra", NAMA_MITRA);
-        intent.putExtra("nama_kategori", NAMA_KATEGORI);
+        Intent intent = new Intent(EditPhotoLapakActivity.this, MitraLapakKategoriActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
