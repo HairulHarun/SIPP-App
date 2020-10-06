@@ -46,6 +46,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -117,7 +118,7 @@ public class LapakActivity extends AppCompatActivity {
         txtMitra.setText(NAMA_MITRA);
         txtKategori.setText(NAMA_KATEGORI);
         txtDetail.setText(DETAIL);
-        txtHarga.setText("Rp. "+HARGA);
+        txtHarga.setText(konversiRupiah(Integer.parseInt(HARGA)));
         txtStok.setText(STOK+" pcs");
         txtStatus.setText(STATUS);
 
@@ -439,5 +440,13 @@ public class LapakActivity extends AppCompatActivity {
         Uri uri = Uri.fromParts("package", getPackageName(), null);
         intent.setData(uri);
         startActivityForResult(intent, 101);
+    }
+
+    private String konversiRupiah(double angka){
+        String hasil = null;
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+        hasil = formatRupiah.format(angka);
+        return hasil;
     }
 }

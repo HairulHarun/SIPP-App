@@ -19,7 +19,9 @@ import com.chairul.sipp_app.R;
 import com.chairul.sipp_app.model.LapakModel;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class RVLapakAdapter extends RecyclerView.Adapter<RVLapakAdapter.ViewHolder> {
@@ -51,7 +53,7 @@ public class RVLapakAdapter extends RecyclerView.Adapter<RVLapakAdapter.ViewHold
         holder.txtCardNamaLapak.setText(lapakModel.getNama());
         holder.txtCardDetailLapak.setText(lapakModel.getDetail());
         holder.txtCardStokLapak.setText(lapakModel.getStok());
-        holder.txtCardHargaLapak.setText(lapakModel.getHarga());
+        holder.txtCardHargaLapak.setText(konversiRupiah(Integer.parseInt(lapakModel.getHarga())));
         holder.txtCardStatusLapak.setText(lapakModel.getStatus());
 
         Picasso.with(context)
@@ -121,5 +123,13 @@ public class RVLapakAdapter extends RecyclerView.Adapter<RVLapakAdapter.ViewHold
 
         }
 
+    }
+
+    private String konversiRupiah(double angka){
+        String hasil = null;
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+        hasil = formatRupiah.format(angka);
+        return hasil;
     }
 }

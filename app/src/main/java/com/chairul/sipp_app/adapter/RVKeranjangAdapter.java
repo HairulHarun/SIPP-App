@@ -34,8 +34,10 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -69,7 +71,7 @@ public class RVKeranjangAdapter extends RecyclerView.Adapter<RVKeranjangAdapter.
         holder.txtCardNama.setText(keranjangModel.getNamaLapak());
         holder.txtCardTanggal.setText(keranjangModel.getTanggalPakai());
         holder.txtCardKet.setText(keranjangModel.getKeterangan());
-        holder.txtCardJumlah.setText("Rp. "+keranjangModel.getSubTotal());
+        holder.txtCardJumlah.setText(konversiRupiah(Integer.parseInt(keranjangModel.getSubTotal())));
 
         holder.imgHapus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +177,14 @@ public class RVKeranjangAdapter extends RecyclerView.Adapter<RVKeranjangAdapter.
             imgHapus = (ImageView) itemView.findViewById(R.id.txtCardKeranjangHapus);
         }
 
+    }
+
+    private String konversiRupiah(double angka){
+        String hasil = null;
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+        hasil = formatRupiah.format(angka);
+        return hasil;
     }
 
     private void refresh(){

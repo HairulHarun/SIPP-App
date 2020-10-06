@@ -47,9 +47,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class TransaksiDetailActivity extends AppCompatActivity {
@@ -212,7 +214,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                             txtPenjelasanKet.setText("No Hp Users");
                         }
 
-                        txtTotal.setText("Rp. "+String.valueOf(total));
+                        txtTotal.setText(konversiRupiah(total));
                         txtNamaMitra.setText(nama_mitra);
                         txtNoRek.setText(norek_mitra);
                         txtStatus.setText(status_transaksi);
@@ -515,5 +517,13 @@ public class TransaksiDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
+    }
+
+    private String konversiRupiah(double angka){
+        String hasil = null;
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+        hasil = formatRupiah.format(angka);
+        return hasil;
     }
 }

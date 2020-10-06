@@ -28,6 +28,7 @@ public class SessionAdapter {
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_PHOTO = "photo";
+    public static final String FIREBASE_TOKEN = "token";
 
     public SessionAdapter(Context context){
         this._context = context;
@@ -54,6 +55,11 @@ public class SessionAdapter {
         editor.putString(KEY_USERNAME, username);
         editor.putString(KEY_PASSWORD, password);
         editor.putString(KEY_PHOTO, photo);
+        editor.commit();
+    }
+
+    public void simpanToken(String token){
+        editor.putString(FIREBASE_TOKEN, token);
         editor.commit();
     }
 
@@ -132,6 +138,11 @@ public class SessionAdapter {
     public String getPhoto(){
         String user = pref.getString(KEY_PHOTO, null);
         return user;
+    }
+
+    public String getToken(){
+        String token = pref.getString(FIREBASE_TOKEN, null);
+        return token;
     }
 
     public void logoutUser(){

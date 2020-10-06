@@ -34,8 +34,10 @@ import com.chairul.sipp_app.model.TransaksiModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -71,7 +73,7 @@ public class RVTransaksiAdapter extends RecyclerView.Adapter<RVTransaksiAdapter.
         holder.txtCardIdUsers.setText(transaksiModel.getIdUsers());
         holder.txtCardIdLapak.setText(transaksiModel.getIdLapak());
         holder.txtCardIdMitra.setText(transaksiModel.getIdMitra());
-        holder.txtCardSubTotal.setText("Rp. "+transaksiModel.getSubTotal());
+        holder.txtCardSubTotal.setText(konversiRupiah(Integer.parseInt(transaksiModel.getSubTotal())));
 
         setAnimation(holder.itemView, position);
 
@@ -129,5 +131,13 @@ public class RVTransaksiAdapter extends RecyclerView.Adapter<RVTransaksiAdapter.
 
         }
 
+    }
+
+    private String konversiRupiah(double angka){
+        String hasil = null;
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+        hasil = formatRupiah.format(angka);
+        return hasil;
     }
 }

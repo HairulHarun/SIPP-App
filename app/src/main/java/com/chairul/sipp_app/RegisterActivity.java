@@ -27,6 +27,7 @@ import com.chairul.sipp_app.adapter.KoneksiAdapter;
 import com.chairul.sipp_app.adapter.SessionAdapter;
 import com.chairul.sipp_app.adapter.URLAdapter;
 import com.chairul.sipp_app.adapter.VolleyAdapter;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -117,11 +118,11 @@ public class RegisterActivity extends AppCompatActivity {
                                     String password = txtPassword.getText().toString();
                                     String confirmpassword = txtConfirmPassword.getText().toString();
 
-//                                    String token = FirebaseInstanceId.getInstance().getToken();
+                                    String token = FirebaseInstanceId.getInstance().getToken();
 
                                     if (username.trim().length() > 0 && password.trim().length() > 0) {
                                         if (isInternetPresent = koneksiAdapter.isConnectingToInternet()) {
-                                            checkRegister(status, nama, alamat, hp, norek, username, password, confirmpassword);
+                                            checkRegister(status, nama, alamat, hp, norek, username, password, confirmpassword, token);
                                         }else{
                                             SnackbarManager.show(
                                                     Snackbar.with(RegisterActivity.this)
@@ -180,7 +181,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     final String norek,
                                     final String username,
                                     final String password,
-                                    final String confirm_password) {
+                                    final String confirm_password,
+                                    final String token) {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Register ...");
@@ -238,6 +240,7 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put("username", username);
                 params.put("password", password);
                 params.put("confirm_password", confirm_password);
+                params.put("token", token);
 
                 return params;
             }

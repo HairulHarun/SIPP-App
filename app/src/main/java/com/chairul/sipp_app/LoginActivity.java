@@ -29,6 +29,7 @@ import com.chairul.sipp_app.adapter.KoneksiAdapter;
 import com.chairul.sipp_app.adapter.SessionAdapter;
 import com.chairul.sipp_app.adapter.URLAdapter;
 import com.chairul.sipp_app.adapter.VolleyAdapter;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -114,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if (username.trim().length() > 0 && password.trim().length() > 0) {
                                         if (isInternetPresent = koneksiAdapter.isConnectingToInternet()) {
-                                            checkLogin(status, username, password);
+                                            checkLogin(status, username, password, FirebaseInstanceId.getInstance().getToken().toString());
                                         }else{
                                             SnackbarManager.show(
                                                     Snackbar.with(LoginActivity.this)
@@ -182,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void checkLogin(final String status, final String username, final String password) {
+    private void checkLogin(final String status, final String username, final String password, final String token) {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("Logging in ...");
@@ -213,6 +214,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         // menyimpan login ke session
                         sessionAdapter.createLoginSession(status, id, nama, alamat, hp, norek, username, password, photo);
+                        sessionAdapter.simpanToken(token);
 
                         // Memanggil main activity
                         if (status.equals("Mitra")){
@@ -244,6 +246,7 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("status", status);
                 params.put("username", username);
                 params.put("password", password);
+                params.put("token", token);
 
                 return params;
             }

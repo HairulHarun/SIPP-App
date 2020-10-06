@@ -52,9 +52,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class KeranjangActivity extends AppCompatActivity {
@@ -178,7 +180,7 @@ public class KeranjangActivity extends AppCompatActivity {
                         nama_mitra = jObj.getString("nama_mitra");
                         norek_mitra = jObj.getString("norek_mitra");
 
-                        txtTotal.setText("Rp. "+String.valueOf(total));
+                        txtTotal.setText(konversiRupiah(total));
                         txtNamaMitra.setText(nama_mitra);
                         txtNoRek.setText(norek_mitra);
 
@@ -341,6 +343,14 @@ public class KeranjangActivity extends AppCompatActivity {
         Uri uri = Uri.fromParts("package", getPackageName(), null);
         intent.setData(uri);
         startActivityForResult(intent, 101);
+    }
+
+    private String konversiRupiah(double angka){
+        String hasil = null;
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+        hasil = formatRupiah.format(angka);
+        return hasil;
     }
 
     private void refresh(){
