@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.chairul.sipp_app.BerandaActivity;
+import com.chairul.sipp_app.MitraActivity;
 import com.chairul.sipp_app.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -48,7 +49,7 @@ public class NotificationService extends FirebaseMessagingService {
 
             //parsing json data
             String isi_notif = data.getString("isi_notif");
-            Intent intent = new Intent(getApplicationContext(), BerandaActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MitraActivity.class);
             showNotification(getApplicationContext(), "Portal Event", isi_notif, intent);
 
             Intent i = new Intent(getApplicationContext(), NotificationSoundService.class);
