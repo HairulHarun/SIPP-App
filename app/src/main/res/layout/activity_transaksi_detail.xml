@@ -85,6 +85,28 @@
                     android:text="Metode" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layoutBatasBayar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Batas Pembayaran"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtTransaksiDetailBatasBayar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2020-20-10" />
+            </LinearLayout>
+
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="0.5dp"

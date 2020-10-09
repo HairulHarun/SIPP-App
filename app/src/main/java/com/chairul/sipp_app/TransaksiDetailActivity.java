@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,7 +63,8 @@ public class TransaksiDetailActivity extends AppCompatActivity {
     private static final String TAG_TRANSAKSI = "transaksi";
 
     private ScrollView scrollView;
-    private TextView txtNamaMitra, txtNoRek, txtStatus, txtTotal, txtPenjelasan, txtPenjelasanMitra, txtKetBukti, txtPenjelasanKet;
+    private LinearLayout layoutBatasBayar;
+    private TextView txtNamaMitra, txtNoRek, txtStatus, txtTotal, txtBatasBayar, txtPenjelasan, txtPenjelasanMitra, txtKetBukti, txtPenjelasanKet;
     private Button btnUpload, btnBatal, btnTerima, btnTolak;
     private ImageView imgBukti;
 
@@ -76,7 +78,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
     private List<KeranjangModel> keranjangModelList;
 
     int success, total;
-    String nama_mitra, norek_mitra, status_transaksi;
+    String nama_mitra, norek_mitra, status_transaksi, tgl_bayar;
 
     private Intent intent;
     private String intent_id, intent_idlapak, intent_idusers, intent_idmitra, intent_kode, intent_namamitra, intent_bukti, intent_status, intent_subtotal;
@@ -104,6 +106,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
         txtNoRek = (TextView) findViewById(R.id.txtTransaksiDetailNorek);
         txtTotal = (TextView) findViewById(R.id.txtTransaksiDetailTotal);
         txtStatus = (TextView) findViewById(R.id.txtTransaksiDetailStatus);
+        txtBatasBayar = (TextView) findViewById(R.id.txtTransaksiDetailBatasBayar);
         txtPenjelasan = (TextView) findViewById(R.id.txtTransaksiDetailPenjelasan);
         txtPenjelasanMitra = (TextView) findViewById(R.id.txtTransaksiDetailPenjelasanMitra);
         txtPenjelasanKet = (TextView) findViewById(R.id.txtTransaksiDetailKet);
@@ -114,6 +117,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
         btnTerima = (Button) findViewById(R.id.btnTransaksiDetailVerifikasi2);
         imgBukti = (ImageView) findViewById(R.id.imgTransaksiDetailBukti);
         scrollView = (ScrollView) findViewById(R.id.scrollView3);
+        layoutBatasBayar = (LinearLayout) findViewById(R.id.layoutBatasBayar);
 
         mRecyclerView = (RecyclerView)findViewById(R.id.rvTransaksiDetail);
         keranjangModelList = new ArrayList<>();
@@ -208,16 +212,19 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                         if (sessionAdapter.getStatus().equals("Users")){
                             nama_mitra = jObj.getString("nama_mitra");
                             norek_mitra = jObj.getString("norek_mitra");
+                            tgl_bayar = jObj.getString("tglbayar");
                         }else{
                             nama_mitra = jObj.getString("nama_users");
                             norek_mitra = jObj.getString("hp_users");
                             txtPenjelasanKet.setText("No Hp Users");
+                            layoutBatasBayar.setVisibility(View.GONE);
                         }
 
                         txtTotal.setText(konversiRupiah(total));
                         txtNamaMitra.setText(nama_mitra);
                         txtNoRek.setText(norek_mitra);
                         txtStatus.setText(status_transaksi);
+                        txtBatasBayar.setText(tgl_bayar);
 
                         if (sessionAdapter.getStatus().equals("Mitra")){
                             if (status_transaksi.equals("Menunggu Pembayaran")){
@@ -305,6 +312,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                                 txtPenjelasan.setVisibility(View.VISIBLE);
                                 btnUpload.setVisibility(View.VISIBLE);
                                 btnBatal.setVisibility(View.VISIBLE);
+                                layoutBatasBayar.setVisibility(View.VISIBLE);
                                 txtKetBukti.setVisibility(View.GONE);
                                 imgBukti.setVisibility(View.GONE);
 
@@ -325,6 +333,7 @@ public class TransaksiDetailActivity extends AppCompatActivity {
                                 btnBatal.setVisibility(View.GONE);
                                 txtKetBukti.setVisibility(View.VISIBLE);
                                 imgBukti.setVisibility(View.VISIBLE);
+                                layoutBatasBayar.setVisibility(View.GONE);
 
                                 txtPenjelasanMitra.setVisibility(View.GONE);
                                 btnTerima.setVisibility(View.GONE);
