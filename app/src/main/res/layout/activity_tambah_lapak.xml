@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="30dip"
-                    android:text="FORM TAMBAH LAPAK"
+                    android:text="FORM TAMBAH BARANG/JASA"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -42,7 +42,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="10dp"
-                    android:text="Kategori Lapak" />
+                    android:text="Kategori Barang/Jasa" />
 
                 <Spinner
                     android:id="@+id/spinner_kategori"
@@ -96,7 +96,7 @@
                     android:background="@color/colorWhite"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:hint="Detail Lapak"
+                    android:hint="Detail Barang/Jasa"
                     android:inputType="textMultiLine"
                     android:padding="10dp" />
 

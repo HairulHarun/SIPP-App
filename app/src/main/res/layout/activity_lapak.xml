@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Nama Lapak"
+                android:text="Nama Barang/Jasa"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
